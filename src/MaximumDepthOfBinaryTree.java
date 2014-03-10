@@ -11,7 +11,7 @@ public class MaximumDepthOfBinaryTree {
 	}
 	
 	public int maxDepth(TreeNode root) {
-		int depth = 0;
+		int depth = 1;
 		
 		return depth; 
     }
