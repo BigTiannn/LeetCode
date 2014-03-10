@@ -57,9 +57,6 @@ public class RestoreIPAddress {
 //		String test = "101023";
 		String test = "0000";
 		System.out.println(Arrays.toString(restoreIpAddresses(test).toArray()));
-		
-		test = "010";
-		System.out.println(isValid(test));
 	}
 
 }
