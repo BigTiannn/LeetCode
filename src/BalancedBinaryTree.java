@@ -72,8 +72,6 @@ public class BalancedBinaryTree {
 		TreeNode node3 = new TreeNode(3);
 		node1.right = node2;
 		node2.right = node3;
-		
-		isBalanced2(node1);
 	}
 
 }
