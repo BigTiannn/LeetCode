@@ -28,7 +28,7 @@ public class PreorderTraversal {
 		traverse(node.right, list);
 	}
 	
-	//TODO: no recursive implementation
+	//no recursive implementation
 	public static ArrayList<Integer> Solution2 (TreeNode root) {
 		ArrayList<Integer> list = new ArrayList<>();
 		Stack<TreeNode> toVisit = new Stack<>(); 

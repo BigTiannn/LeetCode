@@ -23,10 +23,10 @@ public class MinimumDepthOfBinaryTree {
 	
 	// BFS
 	public static int minDepth(TreeNode root) {
-        int minDepth = 0;
+        int minDepth = 1;
         
         if(root == null)
-        	return minDepth;
+        	return 0;
         
         Queue<TreeNode> toVisit = new LinkedList<>();
         toVisit.add(root);
@@ -56,8 +56,7 @@ public class MinimumDepthOfBinaryTree {
     }
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }
