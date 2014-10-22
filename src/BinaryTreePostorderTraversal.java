@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Stack;
 
 
-public class PostorderTraversal {
+public class BinaryTreePostorderTraversal {
 	
 	public static class TreeNode {
 		int val;

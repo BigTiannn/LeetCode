@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.Stack;
 
 
-public class PreorderTraversal {
+public class BinaryTreePreorderTraversal {
 	public static class TreeNode {
 		int val;
 		TreeNode left;
