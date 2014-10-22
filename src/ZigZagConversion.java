@@ -18,7 +18,7 @@ public class ZigZagConversion {
         			sb.append(s.charAt(i + j * N));
         		}
         		if (!(i == 0 || i == nRows - 1)) {
-        			if ((j + 1) * N - i > 0 && (j + 1) * N - i < s.length())
+        			if ((j + 1) * N - i >= 0 && (j + 1) * N - i < s.length())
         				sb.append(s.charAt((j + 1) * N - i));
         		}
         	}
