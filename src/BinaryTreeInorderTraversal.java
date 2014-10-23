@@ -15,31 +15,24 @@ public class BinaryTreeInorderTraversal {
 	
 	public static List<Integer> inorderTraversal(TreeNode root) {
 		List<Integer> trace = new ArrayList<>();
-        Stack<TreeNode> toVisit = new Stack<>();
-        HashSet<TreeNode> visited = new HashSet<>();
-        
-        if (root == null)
-            return trace;
-        
-        toVisit.push(root);
-        while(!toVisit.isEmpty()) {
-            TreeNode node = toVisit.pop();
-            
-            if (node.left == null || visited.contains(node.left)) {
-                trace.add(node.val);
-                visited.add(node);
-                System.out.println(node.val);
-            }
-            
-            if (node.right != null)
-                toVisit.push(node.right);
-            if (!visited.contains(node))
-                toVisit.push(node);
-            if (node.left != null && !visited.contains(node.left))
-                toVisit.push(node.left);   
-        }
-        
-        return trace;
+	    Stack<TreeNode> toVisit = new Stack<>();
+	        
+	    if (root == null)
+	    	return trace;
+	            
+	    TreeNode curr = root;
+	    while(!toVisit.isEmpty() || curr != null) {
+	    	if (curr != null){
+	    		toVisit.push(curr);
+	    		curr = curr.left;
+	    	} else {
+	    		curr = toVisit.pop();
+	    		trace.add(curr.val);
+	    		curr = curr.right;
+	    	}
+	    }
+	    
+	    return trace;
     }
 
 	public static void main(String[] args) {
