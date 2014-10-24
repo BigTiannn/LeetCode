@@ -10,6 +10,7 @@
  *  3  4 4  3
  *  
  * @author BigTiannn {10-22-2014}
+ * 
  */
 
 
@@ -38,8 +39,7 @@ public class SymmetricTree {
 		if (tree1 == null && tree2 == null)
 			return true;
 		
-		if (tree1 == null && tree2 != null || 
-			tree1 != null && tree2 == null)
+		if (tree1 == null || tree2 == null)
 			return false;
 		
 		return (tree1.val == tree2.val) &&
