@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * https://oj.leetcode.com/problems/merge-sorted-array/
  * Given two sorted integer arrays A and B, merge B into A as one sorted array.
@@ -11,6 +13,7 @@
 
 public class MergeSortedArray {
 	
+	// why you solve this so STUPIDLY by traversing the two arrays forwards?!
 	public void merge(int A[], int m, int B[], int n) {
         int a = 0, b = 0;
         while (a < m && b < n) {
@@ -45,10 +48,29 @@ public class MergeSortedArray {
         
         return;
     }
+	
+	// traverse the two arrays backwards
+	public static void merge2(int A[], int m, int B[], int n)  {
+		int i = m - 1, j = n - 1, index = m + n - 1;
+		for (; i >= 0 && j >= 0; index --) {
+			if (A[i] >= B[j]) {
+				A[index] = A[i --];
+			} else {
+				A[index] = B[j --];
+			}
+		}
+		for (; j >= 0; index --, j --)
+			A[index] = B[j];
+		
+		return;
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		int A[] = new int[1];
+		int B[] = {1};
+		merge2(A, 0, B, B.length);
+		System.out.println(Arrays.toString(A));
 	}
 
 }

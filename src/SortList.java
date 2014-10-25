@@ -2,7 +2,7 @@
  * https://oj.leetcode.com/problems/sort-list/
  * Sort a linked list in O(nlogn) time using constant space complexity.
  * 
- * @author BigTiannn {10-23-2014}
+ * @author BigTiannn {10-24-2014}
  *
  */
 public class SortList {
