@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ThreeSum {
 	
-	public List<List<Integer>> threeSum(int[] num) {
+	public static List<List<Integer>> threeSum(int[] num, int target) {
 		List<List<Integer>> ret = new ArrayList<>();
 		
 		Arrays.sort(num);
@@ -25,9 +25,9 @@ public class ThreeSum {
         		
         	int m = i + 1, n = num.length - 1;
         	while (m < n) {
-        		if (num[m] + num[n] < -num[i]) {
+        		if (num[m] + num[n] + num[i] < target) {
         			m ++;
-        		} else if (num[m] + num[n] > -num[i]) {
+        		} else if (num[m] + num[n] + num[i] > target) {
         			n --;
         		} else {
         			List<Integer> l = new ArrayList<>();
@@ -51,7 +51,11 @@ public class ThreeSum {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		int[] num = {1,1,-1,-1,3};
+		int[] num2 = {-1,2,1,-4};
+		List<List<Integer>> ret = threeSum(num2, -1);
+		for (List<Integer> list : ret)
+			System.out.println(Arrays.toString(list.toArray()));
 	}
 
 }

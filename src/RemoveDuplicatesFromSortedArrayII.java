@@ -26,7 +26,7 @@ public class RemoveDuplicatesFromSortedArrayII {
                 A[++ ptr] = A[i];
             }
         }
-        return ptr;
+        return newLen;
     }
 
 	public static void main(String[] args) {
