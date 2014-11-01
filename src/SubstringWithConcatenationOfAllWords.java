@@ -27,6 +27,7 @@ public class SubstringWithConcatenationOfAllWords {
 	// bar|foo|the|foo|bar|man
 	// ba|rfo|oth|efo|oba|rma|n
 	// b|arf|oot|hef|oob|arm|an
+	// Time Complexity is O(n) * O(m/n) = O(m), where n is the length of each word in L, and m is the length of S
 	
 	public static List<Integer> findSubstring(String S, String[] L) {
 		if (L.length == 0 || S.length() == 0)
@@ -54,8 +55,16 @@ public class SubstringWithConcatenationOfAllWords {
 					else
 						mapS.put(sub, mapS.get(sub) + 1);
 					
-					if (mapS.get(sub) <= mapL.get(sub))
+					if (mapS.get(sub) <= mapL.get(sub)) {
 						found ++;
+					} else {	// delete some words from starting index, s.t. mapS.get(sub) < mapL.get(sub)
+						while (mapS.get(sub) > mapL.get(sub)) {
+							String tmp = S.substring(start, start + wordLen);
+							mapS.put(tmp, mapS.get(tmp) - 1);
+							found --;
+							start += wordLen;
+						}
+					}
 					
 					if (found == L.length) {
 						retList.add(start);
@@ -63,8 +72,6 @@ public class SubstringWithConcatenationOfAllWords {
 						mapS.put(ss, mapS.get(ss) - 1);
 						found --;
 						start = start + wordLen;
-					} else {    // delete some words from starting index, s.t. mapS.get(sub) < mapL.get(sub)
-						//TODO:
 					}
 					
 					j += wordLen;
