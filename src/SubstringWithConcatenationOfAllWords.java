@@ -46,48 +46,46 @@ public class SubstringWithConcatenationOfAllWords {
 		for (int i = 0; i < wordLen; i ++) {
 		    HashMap<String, Integer> mapS = new HashMap<>();
 			int found = 0;
+			int start = i;	//string window [start, j] is supposed to contain all the strings in L
 			for (int j = i; j < S.length() - wordLen + 1; j += wordLen) {
-				int start = j;
 				String sub = S.substring(j, j + wordLen);
-				while (mapL.containsKey(sub)) {
-					if (!mapS.containsKey(sub))
-						mapS.put(sub, 1);
-					else
-						mapS.put(sub, mapS.get(sub) + 1);
-					
-					if (mapS.get(sub) <= mapL.get(sub)) {
-						found ++;
-					} else {	// delete some words from starting index, s.t. mapS.get(sub) < mapL.get(sub)
-						while (mapS.get(sub) > mapL.get(sub)) {
-							String tmp = S.substring(start, start + wordLen);
-							mapS.put(tmp, mapS.get(tmp) - 1);
-							found --;
-							start += wordLen;
-						}
-					}
-					
-					if (found == L.length) {
-						retList.add(start);
-						String ss = S.substring(start, start + wordLen);
-						mapS.put(ss, mapS.get(ss) - 1);
-						found --;
-						start = start + wordLen;
-					}
-					
-					j += wordLen;
-					if (j + wordLen - 1 < S.length())
-						sub = S.substring(j, j + wordLen);
-					else
-						break;
-				} // while
+				if (!mapL.containsKey(sub)) {
+					start = j + wordLen;	//
+					mapS.clear();
+					found = 0;
+					continue;
+				}
 				
-				mapS.clear();
-			    found = 0;
+				// sub is in L
+				if (!mapS.containsKey(sub))
+					mapS.put(sub, 1);
+				else
+					mapS.put(sub, mapS.get(sub) + 1);
+				
+				if (mapS.get(sub) <= mapL.get(sub)) {
+					found ++;
+				} else {	// move "start" forward to delete some words, s.t. mapS.get(sub) < mapL.get(sub)
+					while (mapS.get(sub) > mapL.get(sub)) {
+						String tmp = S.substring(start, start + wordLen);
+						mapS.put(tmp, mapS.get(tmp) - 1);
+						if (mapS.get(tmp) < mapL.get(tmp))
+							found --;
+						start += wordLen;
+					}
+				}
+				
+				if (found == L.length) {
+					retList.add(start);
+					String tmp = S.substring(start, start + wordLen);
+					mapS.put(tmp, mapS.get(tmp) - 1);
+					start += wordLen;
+					found --;
+				}
+				
 			} // for
 		} // for
 		
 		return retList;
-		
     }
 
 	public static void main(String[] args) {
