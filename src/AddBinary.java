@@ -23,13 +23,13 @@ public class AddBinary {
         }
         
         while (i >= 0) {
-            int tmp = a.charAt(i) - '0' + carry;
+            int tmp = a.charAt(i --) - '0' + carry;
             sb.append(tmp % 2);
             carry = tmp / 2;
         }
         
         while (j >= 0) {
-            int tmp = b.charAt(j) - '0' + carry;
+            int tmp = b.charAt(j --) - '0' + carry;
             sb.append(tmp % 2);
             carry = tmp / 2;
         }
