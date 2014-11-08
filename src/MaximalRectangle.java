@@ -3,7 +3,7 @@
  * Given a 2D binary matrix filled with 0's and 1's, 
  * find the largest rectangle containing all ones and return its area.
  * 
- * @author BigTiannn {11-01-2014}
+ * @author BigTiannn {11-07-2014}
  *
  */
 
