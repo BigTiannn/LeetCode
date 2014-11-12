@@ -8,7 +8,7 @@
 
 public class ValidNumber {
 	
-	public boolean isNumber(String s) {
+	public static boolean isNumber(String s) {
 		if (s == null)
             return false;
             
@@ -46,7 +46,7 @@ public class ValidNumber {
         return true;
     }
 	
-	private boolean isInteger(String s, int start, int end) {
+	private static boolean isInteger(String s, int start, int end) {
         if (start >= end)
             return false;
         if (s.charAt(start) == '+' || s.charAt(start) == '-')
@@ -69,6 +69,7 @@ public class ValidNumber {
 		// corner case 5: ".e1"
 		// corner case 6: " -."
 		// corner case 7: " -e58"
+		System.out.println(isNumber("+9"));
 	}
 
 }
