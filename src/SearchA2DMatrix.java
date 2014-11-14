@@ -10,6 +10,34 @@
  */
 
 public class SearchA2DMatrix {
+	
+	public boolean searchMatrix(int[][] matrix, int target) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        
+        int i = 0;
+        while (i < m && matrix[i][n - 1] < target) {
+            i ++;
+        }
+        
+        if (i == m)
+            return false;
+        
+        // binary search in this row
+        int low = 0, high = n - 1;
+        while (low <= high) {
+            int middle = (low + high) / 2;
+            if (target < matrix[i][middle]) {
+                high = middle - 1;
+            } else if (target > matrix[i][middle]) {
+                low = middle + 1;
+            } else {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
