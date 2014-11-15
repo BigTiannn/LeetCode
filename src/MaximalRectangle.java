@@ -10,7 +10,7 @@
 public class MaximalRectangle {
 	
 	public int maximalRectangle(char[][] matrix) {
-        ;
+        
     }
 
 	public static void main(String[] args) {
