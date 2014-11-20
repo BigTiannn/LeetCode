@@ -42,7 +42,7 @@ public class NQueensII {
     }
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println(totalNQueens(16));
+		System.out.println(totalNQueens(8));
 	}
 
 }
