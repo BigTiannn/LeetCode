@@ -31,10 +31,11 @@ public class InterleavingString {
             dp[0][i + 1] = true;
         
         /* dp state transition function:
+         * PAY ATTENTION: s3 starts from index 1!
          * dp[i][j]: if the s1[0...i] and s2[0..j] can interleave to form s3[0...i + j]
-         * dp[i + 1][j + 1] = dp[i][j + 1] | dp[i + 1][j], if s1[i] == s2[j] == s3[i + j]
-         * dp[i + 1][j + 1] = dp[][] | dp[][], if s1[i] == s3[i + j]
-         * dp[i + 1][j + 1] = dp[][] | dp[][], if s2[j] == s3[i + j]
+         * dp[i + 1][j + 1] = dp[i][j + 1] | dp[i + 1][j], if s1[i] == s2[j] == s3[i + j + 1]
+         * dp[i + 1][j + 1] = dp[i][j + 1], if s1[i] == s3[i + j + 1]
+         * dp[i + 1][j + 1] = dp[i + 1][j], if s2[j] == s3[i + j + 1]
          */
         for (int i = 0; i < s1.length(); i ++) {
             for (int j = 0; j < s2.length(); j ++) {
