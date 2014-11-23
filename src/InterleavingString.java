@@ -30,21 +30,21 @@ public class InterleavingString {
         for (int i = 0; i < s2.length() && s2.charAt(i) == s3.charAt(i); i ++)
             dp[0][i + 1] = true;
         
-        /* dp state transition function:
-         * PAY ATTENTION: s3 starts from index 1!
-         * dp[i][j]: if the s1[0...i] and s2[0..j] can interleave to form s3[0...i + j]
-         * dp[i + 1][j + 1] = dp[i][j + 1] | dp[i + 1][j], if s1[i] == s2[j] == s3[i + j + 1]
-         * dp[i + 1][j + 1] = dp[i][j + 1], if s1[i] == s3[i + j + 1]
-         * dp[i + 1][j + 1] = dp[i + 1][j], if s2[j] == s3[i + j + 1]
+        /* 
+         *dp state transition function:
+         * dp[i][j]: if the first i characters of s1 and first j characters of s2 can form first (i + j) characters of s3
+         * dp[i][j] = dp[i - 1][j] | dp[i][j - 1], if s1[i - 1] == s2[j - 1] == s3[i + j - 1]
+         * dp[i][j] = dp[i - 1][j], if s1[i - 1] == s3[i + j - 1]
+         * dp[i][j] = dp[i][j - 1], if s2[j - 1] == s3[i + j - 1]
          */
-        for (int i = 0; i < s1.length(); i ++) {
-            for (int j = 0; j < s2.length(); j ++) {
-                if (s1.charAt(i) == s3.charAt(i + j + 1) && s2.charAt(j) == s3.charAt(i + j + 1)) {
-                    dp[i + 1][j + 1] = dp[i][j + 1] | dp[i + 1][j];
-                } else if (s1.charAt(i) == s3.charAt(i + j + 1)) {
-                    dp[i + 1][j + 1] = dp[i][j + 1];
-                } else if (s2.charAt(j) == s3.charAt(i + j + 1)) {
-                    dp[i + 1][j + 1] = dp[i + 1][j];
+        for (int i = 1; i <= s1.length(); i ++) {
+            for (int j = 1; j <= s2.length(); j ++) {
+                if (s1.charAt(i - 1) == s3.charAt(i + j - 1) && s2.charAt(j - 1) == s3.charAt(i + j - 1)) {
+                    dp[i][j] = dp[i - 1][j] | dp[i][j - 1];
+                } else if (s1.charAt(i - 1) == s3.charAt(i + j - 1)) {
+                    dp[i][j] = dp[i - 1][j];
+                } else if (s2.charAt(j - 1) == s3.charAt(i + j - 1)) {
+                    dp[i][j] = dp[i][j - 1];
                 }
             }
         }
