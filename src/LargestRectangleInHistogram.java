@@ -36,7 +36,7 @@ public class LargestRectangleInHistogram {
     }
 	
 	// the stack is used to store the index of monotonically increasing elements
-	public int largestRectangleArea_2(int[] height) {
+	public static int largestRectangleArea_2(int[] height) {
 		Stack<Integer> stack = new Stack<Integer>();
         int i = 0;
         int maxArea = 0;
@@ -55,8 +55,8 @@ public class LargestRectangleInHistogram {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int height[] = {4, 2};
-		System.out.println(largestRectangleArea(height));
+		int height[] = {1, 1};
+		System.out.println(largestRectangleArea_2(height));
 	}
 
 }
