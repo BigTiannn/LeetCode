@@ -11,7 +11,7 @@
  */
 
 public class RecoverBinarySearchTree {
-	public class TreeNode {
+	public static class TreeNode {
 		int val;
 		TreeNode left;
 		TreeNode right;
@@ -53,7 +53,30 @@ public class RecoverBinarySearchTree {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		// 1 3 4 6 7 8 10 13 14
+		RecoverBinarySearchTree.TreeNode node1 = new RecoverBinarySearchTree.TreeNode(1);
+		RecoverBinarySearchTree.TreeNode node3 = new RecoverBinarySearchTree.TreeNode(3);
+		RecoverBinarySearchTree.TreeNode node4 = new RecoverBinarySearchTree.TreeNode(8);
+		RecoverBinarySearchTree.TreeNode node6 = new RecoverBinarySearchTree.TreeNode(6);
+		RecoverBinarySearchTree.TreeNode node7 = new RecoverBinarySearchTree.TreeNode(7);
+		RecoverBinarySearchTree.TreeNode node8 = new RecoverBinarySearchTree.TreeNode(4);
+		RecoverBinarySearchTree.TreeNode node10 = new RecoverBinarySearchTree.TreeNode(10);
+		RecoverBinarySearchTree.TreeNode node13 = new RecoverBinarySearchTree.TreeNode(13);
+		RecoverBinarySearchTree.TreeNode node14 = new RecoverBinarySearchTree.TreeNode(14);
+		
+		node8.left = node3;
+		node8.right = node10;
+		node3.left = node1;
+		node3.right = node6;
+		node6.left = node4;
+		node6.right = node7;
+		node10.right = node14;
+		node14.left = node13;
+		
+		RecoverBinarySearchTree obj = new RecoverBinarySearchTree();
+		obj.inorder(node8);
+		System.out.println(obj.first.val);
+		System.out.println(obj.second.val);
 	}
 
 }

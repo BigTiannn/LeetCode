@@ -1,59 +1,73 @@
+/**
+ * https://oj.leetcode.com/problems/spiral-matrix/
+ * Given a matrix of m x n elements (m rows, n columns), 
+ * return all elements of the matrix in spiral order.
+ * For example, Given the following matrix:
+ * [
+ *  [ 1, 2, 3 ],
+ *  [ 4, 5, 6 ],
+ *  [ 7, 8, 9 ]
+ * ]
+ * You should return [1,2,3,6,9,8,7,4,5].
+ * 
+ * @author BigTiannn {11-30-2014}
+ * 
+ */
+
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class SpiralMatrix {
 	
-	public static ArrayList<Integer> Solution(int[][] matrix) {
-		ArrayList<Integer> result = new ArrayList<>();
-		if (matrix == null || matrix.length == 0 || matrix[0].length == 0)
-			return result;
+	public List<Integer> spiralOrder(int[][] matrix) {
+		List<Integer> res = new ArrayList<>();
+        
+        if (matrix == null || matrix.length == 0)
+            return res;
+        
+        int m = matrix.length;
+        int n = matrix[0].length;
+        
+        // x for row, y for col
+        int x = 0, y = 0;
+        
+        while (m > 0 && n > 0) {
+            // special cases: only one row/column left
+            if (m == 1) {
+                for (int i = 0; i < n; i ++)
+                    res.add(matrix[x][y ++]);
+                break;
+            } else if (n == 1) {
+                for (int i = 0; i < m; i ++)
+                    res.add(matrix[x ++][y]);
+                break;
+            }
+            
+            // top
+            for (int i = 0; i < n - 1; i ++)
+                res.add(matrix[x][y ++]);
+                
+            // right
+            for (int i = 0; i < m - 1; i ++)
+                res.add(matrix[x ++][y]);
+                
+            // bottom
+            for (int i = 0; i < n - 1; i ++)
+                res.add(matrix[x][y --]);
+                
+            // left
+            for (int i = 0; i < m - 1; i ++)
+                res.add(matrix[x --][y]);
+                
+            x ++;
+            y ++;
+            m -= 2;
+            n -= 2;
+        }
+        
+        return res;
 		
-		int n = matrix.length;
-		int m = matrix[0].length;
-		
-		int layer = Math.min(n, m) / 2;
-		
-		for (int i = 0; i < layer; i ++) {
-			// top row
-			for (int j = i; j < m - i - 1; j ++) {
-				result.add(matrix[i][j]);
-			}
-			// right column
-			for (int j = i; j < n - i - 1; j ++) {
-				result.add(matrix[j][m - i - 1]);
-			}
-			// bottom row
-			for (int j = m - i - 1; j > i; j --) {
-				result.add(matrix[n - i - 1][j]);
-			}
-			// left column
-			for (int j = n - i - 1; j > i; j --) {
-				result.add(matrix[j][i]);
-			}
-		}
-		
-		// special cases
-		if (m % 2 == 1 && n % 2 == 1) {
-			if (m >= n) {
-				for (int i = layer; i < m - layer; i ++)
-					result.add(matrix[layer][i]);
-			} else {
-				for (int i = layer; i < n - layer; i ++)
-					result.add(matrix[i][layer]);
-			}
-		}
-		
-		if (m % 2 == 1 && n % 2 == 0 && n > m) {
-			for (int i = layer; i < n - layer; i ++)
-				result.add(matrix[i][layer]);
-		}
-		
-		if (n % 2 == 1 && m % 2 == 0 && m > n) {
-			for (int i = layer; i < m - layer; i ++)
-				result.add(matrix[layer][i]);
-		}
-		
-		return result;
 	}
 
 	public static void main(String[] args) {
