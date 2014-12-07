@@ -1,16 +1,19 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-
-/***
+/**
  * http://oj.leetcode.com/problems/permutations/
  * Given a collection of numbers, return all possible permutations.
  * 
- * @author BigTiannn
+ * @author BigTiannn {12-06-2014}
  */
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Permutations {
 	
-	// non-recursive implementation
-	//loop through the array, add a new element to the previous result in each iteration
+	/* non-recursive implementation
+	 * loop through the array, add a new element to the previous result in each iteration
+	 */
 	public static ArrayList<ArrayList<Integer>> permute(int[] num) {
         ArrayList<ArrayList<Integer>> result = new ArrayList<>();
         if (num == null)
@@ -35,6 +38,32 @@ public class Permutations {
     }
 	
 	// recursive implementation
+	public List<List<Integer>> permute_r(int[] num) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        boolean[] visited = new boolean[num.length];
+        helper(num, 0, res, list, visited);
+        return res;
+    }
+    
+    public void helper(int[] num, int step, List<List<Integer>> res, List<Integer> list, boolean[] visited) {
+        if (step == num.length) {
+            res.add(new ArrayList<Integer>(list));
+            return;
+        }
+        
+        for (int i = 0; i < num.length; i ++) {
+            if (visited[i])
+                continue;
+            visited[i] = true;;
+            list.add(num[i]);
+            helper(num, step + 1, res, list, visited);
+            list.remove(list.size() - 1);
+            visited[i] = false;
+        }
+    }
+	
+	// recursive implementation 2
 	public static void perm(int[] num, int start, ArrayList<ArrayList<Integer>> result) {
 		if (start >= num.length) {
 			ArrayList<Integer> list = new ArrayList<>();
