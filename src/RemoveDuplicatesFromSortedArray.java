@@ -10,21 +10,17 @@
 public class RemoveDuplicatesFromSortedArray {
 	
 	public int removeDuplicates(int[] A) {
-		if (A == null || A.length == 0)
-			return 0;
-		
-		int newLen = A.length;
-		int ptr = 0;
+		if (A.length < 2)
+            return A.length;
+            
+        int newLength = 1;
         for (int i = 1; i < A.length; i ++) {
-        	if (A[i] != A[ptr]) {
-        		ptr ++;
-        		A[ptr] = A[i];
-        	} else {
-        		newLen --;
-        	}
+            if (A[i] == A[newLength - 1])
+                continue;
+            A[newLength ++] = A[i];
         }
         
-        return newLen;
+        return newLength;
     }
 
 	public static void main(String[] args) {
