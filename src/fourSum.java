@@ -49,13 +49,15 @@ public class fourSum {
         }
         
         return ret;
+        
     }
-
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int num[] = {0, 0, 0, 0};
 		List<List<Integer>> ret = fourSum(num, 0);
 		System.out.println(Arrays.toString(ret.toArray()));
+		
 	}
 
 }

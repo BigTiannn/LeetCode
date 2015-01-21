@@ -10,37 +10,29 @@ import java.util.ArrayList;
 public class PermutationSequence {
 	
 	public static String getPermutation(int n, int k) {
-		String ret = "";
-		ArrayList<Integer> list = new ArrayList<Integer>();
-		int factorial = 1;
-		for (int i = 1; i <= n; i ++) {
-			list.add(i);
-			factorial *= i;
-		}
-		factorial /= n;
-		int i = n - 1;
-		int div = 0;
-		while (i > 0) {
-			div = k / factorial;
-			k = k % factorial;
-			if (k > 0) {
-				ret += Integer.toString(list.get(div));
-				list.remove(div);
-			} else if (div > 0) {
-				ret += Integer.toString(list.get(div - 1));
-				list.remove(div - 1);
-			} else {
-				for (int j = list.size() - 1; j >= 0; j --)
-					ret += Integer.toString(list.get(j));
-				return ret;
-			}
-			factorial /= i;
-			i --;
-		}
-		
-		ret += Integer.toString(list.get(0));
-		
-        return ret;
+		// transfer it to start from 0 rather than 1
+        k --;
+        
+        ArrayList<Integer> numList = new ArrayList<>();
+        for (int i = 1; i <= n; i ++) {
+            numList.add(i);
+        }
+        
+        // calculate the factorial
+        int factorial = 1;
+        for (int i = 2; i < n; i ++) {
+            factorial *= i;
+        }
+        
+        StringBuilder res = new StringBuilder();
+        for (int i = n - 1; i > 0; factorial /= i, i --) {
+            int div = k / factorial;
+            k = k % factorial;
+            res.append(numList.get(div));
+            numList.remove(div);
+        }
+        res.append(numList.get(0));
+        return res.toString();
     }
 	
 	public static void main(String[] args) {

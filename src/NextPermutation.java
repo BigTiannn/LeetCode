@@ -14,43 +14,43 @@ import java.util.Collections;
 public class NextPermutation {
 	
 	public static void nextPermutation(int[] num) {
-        if (num == null)
-        	return;
-        for (int i = num.length - 1; i >= 0; i --) {
-        	int max = -1;
-        	for (int j = i + 1; j < num.length; j ++) {
-        		if (num[j] > num[i] && 
-        				(max == -1 || num[max] > num[j])) {
-        			max = j;
-        		}
-        	}
-        	if (max != -1) {
-    			int tmp = num[i];
-    			num[i] = num [max];
-    			num[max] = tmp;
-    			sort(num, i + 1);
-    			return;
-    		}
+		// 1. from right to left, find the first element violates the increasing trend (partition number)
+        int partitionIdx = -1;
+        for (int i = num.length - 2; i >= 0; i --) {
+            if (num[i] < num[i + 1]) {
+                partitionIdx = i;
+                break;
+            }
         }
         
-        //rearrange it in ascending order
-        for (int i = 0; i < num.length / 2; i ++) {
-        	int tmp = num[i];
-        	num[i] = num[num.length - i - 1];
-        	num[num.length - i - 1] = tmp;
+        // 2. from right to left, find the first number that is greater than the partition number (change number)
+        if (partitionIdx != -1) {
+            int changeIdx = -1;
+            for (int i = num.length - 1; i > partitionIdx; i --) {
+                if (num[i] > num[partitionIdx]) {
+                    changeIdx = i;
+                    break;
+                }
+            }
+            // 3. swap the partition number and change number
+            if (changeIdx != -1) {
+                int tmp = num[partitionIdx];
+                num[partitionIdx] = num[changeIdx];
+                num[changeIdx] = tmp;
+            }
+        }
+        
+        // 4. reverse all the digits on the right of the partition number
+        for (int i = partitionIdx + 1, j = num.length - 1; i < j; i ++, j --) {
+            int tmp = num[i];
+            num[i] = num[j];
+            num[j] = tmp;
         }
         
         return;
     }
 	
-	public static void sort(int[] num, int start) {
-		int[] array = new int[num.length - start];
-		for (int i = start; i < num.length; i ++)
-			array[i - start] = num[i];
-		Arrays.sort(array);
-		for (int i = start; i < num.length; i ++)
-			num[i] = array[i - start];
-	}
+	
 
 	public static void main(String[] args) {
 //		int[] num = {4,2,0,2,3,2,0};

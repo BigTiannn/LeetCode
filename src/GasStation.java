@@ -33,6 +33,19 @@ public class GasStation {
 		}
     }
 	
+	public int canCompleteCircuit2(int[] gas, int[] cost) {
+        int start = 0, residue = 0, total = 0;
+        for (int i = 0; i < gas.length; i ++) {
+            residue += gas[i] - cost[i];
+            total += gas[i] - cost[i];
+            if (residue < 0) {
+                start = i + 1;
+                residue = 0;
+            }
+        }
+        return total >= 0 ? start : -1;
+    }
+	
 	public static void main(String[] args) {
 		int[] gas = {1, 2, 3, 3};
 		int[] cost = {2, 1, 5, 1};
