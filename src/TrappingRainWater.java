@@ -35,26 +35,27 @@ public class TrappingRainWater {
     }
 	
 	// Modify it with a similar thought by using a stack
-	public static int trap(int[] A) {
-		int water = 0;
-        Stack<Integer[]> stack = new Stack<>();
+	public int trap(int[] A) {
+        // use a stack to store the index of bar
+        Stack<Integer> stack = new Stack<>();
+        int water = 0;
+        
         for (int i = 0; i < A.length; i ++) {
-            int height = 0;
+            // pop all the elements lower than A[i]
+            int bottom = 0;
             while (!stack.isEmpty()) {
-                Integer[] top = stack.peek();
-                int elevation = top[0];
-                int index = top[1];
-                water += (Math.min(A[i], elevation) - height ) * (i - index - 1);
-                height = elevation;
+                int idx = stack.peek();
+                // bar, A[idx] and A[i] form a trap
+                water += (Math.min(A[idx], A[i]) - bottom) * (i - idx - 1);
+                bottom = A[idx];
                 
-                if (A[i] < elevation) {
+                if (A[i] < A[idx])
                     break;
-                } else
-                	stack.pop();
+                else
+                    stack.pop();
             }
             
-            Integer array[] = {A[i], i};
-            stack.add(array);
+            stack.add(i);
         }
         
         return water;
@@ -82,8 +83,6 @@ public class TrappingRainWater {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int A[] = {0,1,0,2,1,0,1,3,2,1,2,1};
-		System.out.println(trap(A));
 	}
 
 }

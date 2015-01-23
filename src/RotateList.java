@@ -57,6 +57,33 @@ public class RotateList {
         
         return newHead;
     }
+	
+	// form a circle
+	public ListNode rotateRight_2(ListNode head, int n) {
+        if (head == null || n == 0)
+            return head;
+            
+        // n can be larger than the length of list
+        // 1. get the length of list
+        ListNode ptr = head;
+        int len = 1;
+        while (ptr.next != null) {
+            ptr = ptr.next;
+            len ++;
+        }
+        n = len - n % len;
+        
+        // 2. link the tail to the head and form a circle
+        ptr.next = head;
+        
+        // 3. cut the circle at (len - n)th node
+        for (int i = 0; i < n; i ++) {
+            ptr = ptr.next;
+        }
+        head = ptr.next;
+        ptr.next = null;
+        return head;
+    }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

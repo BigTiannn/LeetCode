@@ -65,6 +65,38 @@ public class ReverseNodesInKGroup {
 		}
 		System.out.println();
 	}
+	
+	// add fake head
+	public ListNode reverseKGroup_2(ListNode head, int k) {
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode lastTail = dummy, tailPtr = head, headPtr = head, newHead = null;
+        while (tailPtr != null) {
+            headPtr = lastTail.next;
+            // find the k-th node
+            for (int i = 0; i < k - 1 && tailPtr != null; i ++) {
+                tailPtr = tailPtr.next;
+            }
+            // less than k nodes
+            if (tailPtr == null)   break;
+            
+            lastTail.next = tailPtr;
+            lastTail = headPtr;
+            newHead = tailPtr.next;
+            
+            // reverse the k nodes
+            while (headPtr != tailPtr) {
+                ListNode tmp = headPtr;
+                headPtr = headPtr.next;
+                tmp.next = tailPtr.next;
+                tailPtr.next = tmp;
+            }
+            lastTail.next = newHead;
+            tailPtr = newHead;
+        }
+        
+        return dummy.next;
+    }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

@@ -54,6 +54,27 @@ public class PartitionList {
         
         return fakeHead.next;
     }	
+	
+	public static ListNode partition_2(ListNode head, int x) {
+        ListNode smallHead = new ListNode(-1);
+        ListNode bigHead = new ListNode(-1);
+        ListNode small = smallHead, big = bigHead;
+        
+        for (ListNode curr = head; curr != null; curr = curr.next) {
+            if (curr.val < x) {
+                small.next = curr;
+                small = curr;
+            } else {
+                big.next = curr;
+                big = curr;
+            }
+        }
+        
+        small.next = bigHead.next;
+        big.next = null;    // very important!
+        
+        return smallHead.next;
+    }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -63,7 +84,7 @@ public class PartitionList {
 		node1.next = node2;
 		node2.next = node3;
 		
-		partition(node1, 3);
+		partition_2(node1, 3);
 	}
 
 }
