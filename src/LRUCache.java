@@ -17,91 +17,85 @@ import java.util.HashMap;
 public class LRUCache {
 	
 	private int capacity;
-    private int currLen;
+    private int usedCapacity;
     private HashMap<Integer, DoubleLinkedListNode> map;
-    private DoubleLinkedListNode head;
-    private DoubleLinkedListNode end;
+    DoubleLinkedListNode head;  // newly touched node add to the head
+    DoubleLinkedListNode tail;  // remove from the tail
     
-    private class DoubleLinkedListNode {
+    class DoubleLinkedListNode{
         int key;
-        int value;
-        DoubleLinkedListNode pre;
-        DoubleLinkedListNode next;
-        
-        private DoubleLinkedListNode(int key, int val) {
+        int val;
+        DoubleLinkedListNode prev, next;
+        public DoubleLinkedListNode (int key, int val) {
+            this.val = val;
             this.key = key;
-            this.value = val;
-            this.pre = null;
+            this.prev = null;
             this.next = null;
         }
     }
     
- // Assume that capacity must be greater than 1
     public LRUCache(int capacity) {
         this.capacity = capacity;
-        this.currLen = 0;
-        this.map = new HashMap<>();
+        this.usedCapacity = 0;
+        map = new HashMap<>(); 
     }
     
     public int get(int key) {
         if (map.containsKey(key)) {
-            // move this node to the head of the double linked list
             DoubleLinkedListNode node = map.get(key);
-            removeNode(node);
-            addToHead(node);
-            
-            return node.value;
-        } else
-            return -1;
+            removeFromCache(node);
+            addToCache(node);
+            return node.val;
+        }
+        return -1;
     }
     
     public void set(int key, int value) {
+        // set value
         if (map.containsKey(key)) {
             DoubleLinkedListNode node = map.get(key);
-            node.value = value;
-            removeNode(node);
-            addToHead(node);
-        } else {
-            DoubleLinkedListNode newNode = new DoubleLinkedListNode(key, value);
-            map.put(key, newNode);
-            addToHead(newNode);
-            
-            if (this.currLen < this.capacity) {
-                this.currLen ++;
+            node.val = value;
+            removeFromCache(node);
+            addToCache(node);
+        } else {    // insert
+            DoubleLinkedListNode node = new DoubleLinkedListNode(key, value);
+            map.put(key, node);
+            if (this.usedCapacity < this.capacity) {
+                this.usedCapacity ++;
             } else {
-                // since capacity >= 1, this.end mustn't be null when capacity hits the limit
-                map.remove(this.end.key);
-                removeNode(this.end);
+                map.remove(this.tail.key);
+                removeFromCache(this.tail);
             }
+            addToCache(node);
+        }
+    }
+    
+    // remove from tail
+    private void removeFromCache (DoubleLinkedListNode node) {
+        if (node.prev != null) {
+            node.prev.next = node.next;
+        } else {
+            this.head = node.next;
+        }
+        if (node.next != null) {
+            node.next.prev = node.prev;
+        } else {
+            this.tail = node.prev;
         }
         return;
     }
     
-    private void addToHead(DoubleLinkedListNode node) {
+    // add to head
+    private void addToCache(DoubleLinkedListNode node) {
         node.next = this.head;
-        node.pre = null;
+        node.prev = null;   // pay attention!
         if (this.head != null)
-            head.pre = node;
-        if (this.end == null)
-            this.end = node;
-            
+            this.head.prev = node;
         this.head = node;
-    }
-    
-    private void removeNode(DoubleLinkedListNode node) {
-        if (node.pre != null) {
-            node.pre.next = node.next;
-        } else {
-            // node is head
-            this.head = node.next;
-        }
         
-        if (node.next != null) {
-            node.next.pre = node.pre;
-        } else {
-            // node is end
-            this.end = node.pre;
-        }
+        if (this.tail == null)
+            this.tail = node;
+        return;
     }
 
 	public static void main(String[] args) {

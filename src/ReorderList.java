@@ -54,6 +54,63 @@ public class ReorderList {
 		
 		return ;
 	}
+	
+	public static void reorderList_2(ListNode head) {
+        if (head == null || head.next == null) return;
+        
+        // find the middle node
+        ListNode slow = head, fast = slow, prev = null;
+        while (fast != null && fast.next != null) {
+            prev = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        prev.next = null;
+        
+        System.out.println(slow.val);
+        
+        // len(second half) == len(first half) (even len)
+        // len(second half) == len(first half) + 1 (odd len)
+        slow = reverse(slow);
+        printList(slow);
+        
+        // merge two lists
+        ListNode first = head, second = slow;
+        while (first.next != null) {
+            ListNode tmp1 = first.next;
+            ListNode tmp2 = second.next;
+            first.next = second;
+            second.next = tmp1;
+            first = tmp1;
+            second = tmp2;
+        }
+        first.next = second;
+        return;
+    }
+	
+	public static ListNode reverse(ListNode head) {
+        if (head == null || head.next == null)
+            return head;
+            
+        ListNode prev = head, curr = head.next;
+        while (curr != null) {
+            ListNode tmp = curr;
+            curr = curr.next;
+            tmp.next = prev;
+            prev = tmp;
+        }
+        head.next = null;   // pay attention here
+        return prev;
+    }
+	
+	public static void printList(ListNode head) {
+		ListNode ptr = head;
+		while (ptr != null) {
+			System.out.print(ptr.val + " ");
+			ptr = ptr.next;
+		}
+		System.out.println();
+	}
 		 
 	public static void main(String[] args) {
 		ListNode n1 = new ListNode(1);
@@ -61,20 +118,16 @@ public class ReorderList {
 		ListNode n3 = new ListNode(3);
 		ListNode n4 = new ListNode(4);
 		ListNode n5 = new ListNode(5);
+		ListNode n6 = new ListNode(6);
 		
 		n1.next = n2;
 		n2.next = n3;
 		n3.next = n4;
 		n4.next = n5;
+		n5.next = n6;
 		
-		reorderList(n1);
-		
-		ListNode ptr = n1;
-		while (ptr != null) {
-			System.out.println(ptr.val);
-			ptr = ptr.next;
-		}
-
+		reorderList_2(n1);
+		printList(n1);
 	}
 
 }

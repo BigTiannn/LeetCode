@@ -1,3 +1,12 @@
+/**
+ * https://oj.leetcode.com/problems/copy-list-with-random-pointer/
+ * A linked list is given such that each node contains an additional random pointer 
+ * which could point to any node in the list or null.
+ * Return a deep copy of the list.
+ * 
+ * @author BigTiannn
+ */
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -18,74 +27,66 @@ public class CopyRandomList {
 		}
 	};
 	
-	// Suppose there is no cycle??
-	public static RandomListNode Solution (RandomListNode head) {
-		if (head == null)
-			return null;
-		
-		RandomListNode pre = head;
-		Map<RandomListNode, Integer> oriMap = new HashMap<>();
-		Map<Integer, RandomListNode> newMap = new HashMap<>();
-		
-		RandomListNode newPre = new RandomListNode(pre.label);
-		newPre.next = null;
-		newPre.random = null;
-		oriMap.put(head, 0);
-		newMap.put(0, newPre);
-		
-		int index = 1;
-		RandomListNode curr = pre.next;
-		while (curr != null) {
-			RandomListNode newNode = new RandomListNode (curr.label);
-			newNode.next = null;
-			newNode.random = null;
-			newPre.next = newNode;
-			oriMap.put(curr, index);
-			newMap.put(index, newNode);
-			curr = curr.next;
-			newPre = newNode;
-			index ++;
-			
-		}
-		
-		RandomListNode oriPtr = head;
-		RandomListNode newPtr = newMap.get(0);
-		while (oriPtr != null) {
-			if (oriPtr.random != null) {
-				int i = oriMap.get(oriPtr.random);
-				newPtr.random = newMap.get(i);
-			}
-			oriPtr = oriPtr.next;
-			newPtr = newPtr.next;
-		}
-		
-		return newMap.get(0);
-	}
+	public RandomListNode copyRandomList(RandomListNode head) {
+        Map<RandomListNode, RandomListNode> map = new HashMap<>();
+        RandomListNode dummy = new RandomListNode(-1);
+        RandomListNode p = head, prev = dummy;
+        while (p != null) {
+            RandomListNode node = new RandomListNode(p.label);
+            prev.next = node;
+            map.put(p, node);
+            prev = prev.next;
+            p = p.next;
+        }
+        
+        p = head;
+        RandomListNode q = dummy.next;
+        while (p != null) {
+            if (p.random != null) {
+                q.random = map.get(p.random);
+            }
+            p = p.next;
+            q = q.next;
+        }
+        
+        return dummy.next;
+    }
+	
+	public RandomListNode copyRandomList_2(RandomListNode head) {
+        if (head == null)   return null;
+        // copy each node and append the newly created node to the original one
+        RandomListNode p = head;
+        while (p != null) {
+            RandomListNode node = new RandomListNode(p.label);
+            node.next = p.next;
+            p.next = node;
+            p = node.next;
+        }
+        
+        // set the value of random field
+        p = head;
+        while (p != null) {
+            if (p.random != null)
+                p.next.random = p.random.next;
+            p = p.next.next;
+        }
+        
+        // return the newly created list
+        p = head;
+        RandomListNode dummy = new RandomListNode(-1);
+        RandomListNode q = dummy;
+        while (p != null) {
+            q.next = p.next;
+            q = q.next;
+            p.next = q.next;
+            p = p.next;
+        }
+        
+        return dummy.next;
+    }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		RandomListNode node1 = new RandomListNode(-1);
-		RandomListNode node2 = new RandomListNode(8);
-		RandomListNode node3 = new RandomListNode(7);
-		RandomListNode node4 = new RandomListNode(-3);
-		RandomListNode node5 = new RandomListNode(4);
-		
-		node1.next = node2;
-		node2.next = node3;
-		node3.next = node4;
-		node4.next = node5;
-		node5.next = null;
-		
-		node1.random = node5;
-		node2.random = node4;
-		node3.random = null;
-		node4.random = null;
-		node5.random = node1;
-		
-		RandomListNode node = Solution(node1);
-		System.out.println(node1);
-		System.out.println(node);
-		
 	}
 
 }
