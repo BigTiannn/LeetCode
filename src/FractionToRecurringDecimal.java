@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * https://oj.leetcode.com/problems/fraction-to-recurring-decimal/
  * Given two integers representing the numerator and denominator of a fraction, 
@@ -16,7 +18,9 @@ public class FractionToRecurringDecimal {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		String s = "/a/./b/../../c/";
+		String[] array = s.split("/");
+		System.out.println(Arrays.toString(array));
 	}
 
 }

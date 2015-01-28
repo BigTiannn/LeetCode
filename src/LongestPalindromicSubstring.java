@@ -66,7 +66,7 @@ public class LongestPalindromicSubstring {
                 } else if (s.charAt(i) == s.charAt(j) && (i - j < 2 || dp[j + 1][i - 1])) {
                     dp[j][i] = true;
                 }
-                if (i - j + 1 > maxlen && dp[j][i]) {
+                if (i - j + 1 > maxlen && dp[j][i]) {	// don't forget "&& dp[j][i]"
                     maxlen = i - j + 1;
                     start = j;
                     end = i;

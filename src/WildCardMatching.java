@@ -55,6 +55,7 @@ public class WildCardMatching {
 		System.out.println(isMatch("aa","a*"));
 		System.out.println(isMatch("ab","?*"));
 		System.out.println(isMatch("aab","c*a*b"));
+		System.out.println(isMatch("abcaacabc","abc*aa*abd"));
 	}
 
 }

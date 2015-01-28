@@ -12,7 +12,6 @@ public class IntegerToRoman {
 	public String intToRoman(int num) {
 		char[] RomanCharChart = {'M', 'D', 'C', 'L', 'X', 'V', 'I'};
 		int[] RomanValueChart = {1000, 500, 100, 50, 10, 5, 1};
-		
 		StringBuilder sb = new StringBuilder();
 		
 		while (num != 0) {
@@ -51,10 +50,25 @@ public class IntegerToRoman {
         
         return sb.toString();
     }
+	
+	public static String intToRoman_2(int num) {
+        String[] RomanCharChart = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+		int[] RomanValueChart = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+		StringBuilder sb = new StringBuilder();
+		
+		for (int i = 0; num > 0; i ++) {
+		    int count = num / RomanValueChart[i];
+		    num %= RomanValueChart[i];
+		    for (; count > 0; count --)
+		        sb.append(RomanCharChart[i]); 
+		}
+		
+		return sb.toString();
+    }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		System.out.println(intToRoman_2(1));
 	}
 
 }

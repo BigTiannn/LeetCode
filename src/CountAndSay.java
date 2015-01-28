@@ -6,30 +6,25 @@
 public class CountAndSay {
 	
 	public static String countAndSay(int n) {
-		int strNum = 1;
-		String tmp = "1";
-		StringBuffer result = new StringBuffer("1");
-        while (strNum < n) {
-        	int counter = 1;
-        	result.setLength(0);
-        	int i = 1;
-        	for (; i < tmp.length(); i ++) {
-        		if (tmp.charAt(i) == tmp.charAt(i - 1)) {
-        			counter ++;
+		String s = "1";
+		StringBuffer res = new StringBuffer("1");
+        for (int i = 1; i < n; i ++) {
+        	int count = 1;
+        	res.setLength(0);
+        	for (int j = 1; j < s.length(); j ++) {
+        		if (s.charAt(j) == s.charAt(j - 1)) {
+        			count ++;
         		} else {
-        			result.append(Integer.toString(counter) + tmp.charAt(i - 1));
-        			counter = 1;
+        			res.append(Integer.toString(count) + s.charAt(j - 1));
+        			count = 1;
         		}
         	}
-        	
-        	result.append(Integer.toString(counter) + tmp.charAt(i - 1));
-        	
-        	tmp = result.toString();
-        	strNum ++;
+        	res.append(Integer.toString(count) + s.charAt(s.length() - 1));
+        	s = res.toString();
         }
-        
-        return result.toString();
+        return res.toString();
     }
+	
 
 	public static void main(String[] args) {
 		System.out.println(countAndSay(6));

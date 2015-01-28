@@ -9,6 +9,7 @@
  *
  */
 
+import java.util.Arrays;
 import java.util.Stack;
 
 public class SimplifyPath {
@@ -42,10 +43,36 @@ public class SimplifyPath {
         
         return sb.toString().length() == 0 ? "/" : sb.toString();
     }
+	
+	public String simplifyPath_2(String path) {
+		if (path == null)   return null;
+        
+        StringBuilder sb = new StringBuilder();
+        Stack<String> stack = new Stack<>();
+        String[] dirs = path.split("/");
+        for (String dir : dirs) {
+            if (dir.trim().equals("")) {
+                continue;
+            } else if (dir.trim().equals(".")) {
+                continue;
+            } else if (dir.trim().equals("..")) {
+                if (!stack.isEmpty())
+                    stack.pop();
+            } else {
+                stack.add(dir.trim());
+            }
+        }
+        
+        while (!stack.isEmpty()){
+            sb.insert(0, "/" + stack.pop());
+        }
+        
+        return (sb.length() == 0) ? "/" : sb.toString();
+    }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String s = "/...";
+		String s = "/abc/...";
 //		String s = "/home//foo/";
 		System.out.println(simplifyPath(s));
 	}

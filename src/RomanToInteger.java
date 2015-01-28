@@ -10,55 +10,29 @@
 public class RomanToInteger {
 	
 	public int romanToInt(String s) {
-		int ret = 0, prevBit = 0;
-		for (int i = 0; i < s.length(); i ++) {
-			switch(s.charAt(i)) {
-			case 'M':
-				if (prevBit == 100)
-					ret -= 2 * prevBit;
-				ret += 1000;
-				prevBit = 1000;
-				break;
-			case 'D':
-				if (prevBit == 100)
-					ret -= 2 * prevBit;
-				ret += 500;
-				prevBit = 500;
-				break;
-			case 'C':
-				if (prevBit == 10)
-					ret -= 2 * prevBit;
-				ret += 100;
-				prevBit = 100;
-				break;
-			case 'L':
-				if (prevBit == 10)
-					ret -= 2 * prevBit;
-				ret += 50;
-				prevBit = 50;
-				break;
-			case 'X':
-				if (prevBit == 1)
-					ret -= 2 * prevBit;
-				ret += 10;
-				prevBit = 10;
-				break;
-			case 'V':
-				if (prevBit == 1)
-					ret -= 2 * prevBit;
-				ret += 5;
-				prevBit = 5;
-				break;
-			case 'I':
-				ret += 1;
-				prevBit = 1;
-				break;
-			default:
-				break;
-			}
-		}
-		
-        return ret;
+        int res = 0;
+        int prevDigit = 0, currDigit = 0;
+        for (int i = 0; i < s.length(); i ++) {
+            currDigit = getValue(s.charAt(i));
+            res += getValue(s.charAt(i));
+            if (i > 0 && currDigit > prevDigit)
+                res -= 2 * prevDigit;
+            prevDigit = currDigit;
+        }
+        return res;
+    }
+	
+	private int getValue(char ch) {
+        switch(ch) {
+        case 'I':   return 1;
+        case 'V':   return 5;
+        case 'X':   return 10;
+        case 'L':   return 50;
+        case 'C':   return 100;
+        case 'D':   return 500;
+        case 'M':   return 1000;
+        default:    return -1;
+        }
     }
 	
 	// cannot tell an invalid Roman number
