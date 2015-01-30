@@ -27,10 +27,23 @@ public class PopulatingNextRightPointersInEachNode {
         return;
     }
 	
-	// BFS or lever order traversal
-	public void connect_solution2(TreeLinkNode root) {
-		
+	// iterative
+	public void connect_2(TreeLinkNode root) {
+        if (root == null)   return;
         
+        TreeLinkNode levelStart = root, p = root;
+        while (p != null) {
+            if (p.left != null) {
+                p.left.next = p.right;
+                if (p.next != null)
+                    p.right.next = p.next.left;
+            }
+            p = p.next;
+            if (p == null) {   // next level
+                p = levelStart.left;
+                levelStart = p;
+            }
+        }
         return;
     }
 

@@ -1,8 +1,14 @@
+/**
+ * https://oj.leetcode.com/problems/binary-tree-postorder-traversal/
+ * Given a binary tree, return the postorder traversal of its nodes' values.
+ * 
+ * @author BigTiannn
+ */
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Stack;
-
 
 public class BinaryTreePostorderTraversal {
 	
@@ -40,6 +46,29 @@ public class BinaryTreePostorderTraversal {
 		
 		return list;
 	}
+	
+	public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        Stack<TreeNode> toVisit = new Stack<>();
+        HashSet<TreeNode> visited = new HashSet<>();
+        
+        if (root == null)   return res;
+        
+        toVisit.push(root);
+        while (!toVisit.isEmpty()) {
+            TreeNode node = toVisit.peek();
+            if (node.left != null && !visited.contains(node.left)) {
+                toVisit.push(node.left);
+            } else if (node.right != null && !visited.contains(node.right)) {
+                toVisit.push(node.right);
+            } else {
+                res.add(node.val);
+                toVisit.pop();
+                visited.add(node);
+            }
+        }
+        return res;
+    }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
