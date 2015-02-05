@@ -22,37 +22,31 @@ public class CloneGraph {
 	}
 	
 	public static UndirectedGraphNode Solution (UndirectedGraphNode node) {
-		if (node == null)
-			return null;
-		
-		LinkedList<UndirectedGraphNode> waitinglist = new LinkedList<>();
-		Map<Integer, UndirectedGraphNode> copyMap = new HashMap<>();
-		waitinglist.add(node);
-		
-		while (!waitinglist.isEmpty()){
-			UndirectedGraphNode oriCurr = waitinglist.poll();
-			UndirectedGraphNode newCurr;
-			if (!copyMap.containsKey(oriCurr.label)) {
-				newCurr = new UndirectedGraphNode(oriCurr.label);
-				copyMap.put(oriCurr.label, newCurr);
-			} else {
-				newCurr = copyMap.get(oriCurr.label);
-			}
-			
-			for (UndirectedGraphNode oriNeighbor : oriCurr.neighbors) {
-				if (!copyMap.containsKey(oriNeighbor.label)) {
-					UndirectedGraphNode newNode = new UndirectedGraphNode(oriNeighbor.label);
-					newCurr.neighbors.add(newNode);
-					copyMap.put(newNode.label, newNode);
-					waitinglist.add(oriNeighbor);
-				} else {
-					newCurr.neighbors.add(copyMap.get(oriNeighbor.label));
-				}
-			}
-			
-		}
-		
-		return copyMap.get(node.label);
+		if (node == null)   return null;
+        
+        LinkedList<UndirectedGraphNode> toVisit = new LinkedList<>();
+        // <original, new> pair
+        HashMap<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<>();
+        
+        toVisit.add(node);
+        UndirectedGraphNode copy = new UndirectedGraphNode(node.label);
+        map.put(node, copy);
+        
+        while (!toVisit.isEmpty()) {
+            UndirectedGraphNode oldNode = toVisit.poll();
+            UndirectedGraphNode newNode = map.get(oldNode);
+            for (UndirectedGraphNode neighbor : oldNode.neighbors) {
+                if (map.containsKey(neighbor)) {
+                    newNode.neighbors.add(map.get(neighbor));
+                } else {
+                    UndirectedGraphNode newNeighbor = new UndirectedGraphNode(neighbor.label);
+                    map.put(neighbor, newNeighbor);
+                    newNode.neighbors.add(newNeighbor);
+                    toVisit.add(neighbor);
+                }
+            }
+        }
+        return copy;
 	}
 
 	public static void main(String[] args) {

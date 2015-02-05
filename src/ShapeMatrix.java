@@ -34,17 +34,17 @@ public class ShapeMatrix {
 					
 					matrix[x][y] = -1;	//marked as visited
 					
-					if( x - 1 >= 0 && matrix[x-1][y] == 1 ){	//top
-						queue.add(new int[] {x-1,y});
+					if( x - 1 >= 0 && matrix[x - 1][y] == 1 ){	//top
+						queue.add(new int[] {x - 1,y});
 					}
-					if( x + 1 < m && matrix[x+1][y] == 1 ){	//bottom	
-						queue.add(new int[] {x+1,y});
+					if( x + 1 < m && matrix[x + 1][y] == 1 ){	//bottom	
+						queue.add(new int[] {x + 1,y});
 					}
-					if( y - 1 >= 0 && matrix[x][y-1] == 1 ){	//left
-						queue.add(new int[] {x,y-1});
+					if( y - 1 >= 0 && matrix[x][y - 1] == 1 ){	//left
+						queue.add(new int[] {x,y - 1});
 					}
-					if( y + 1 < n && matrix[x][y+1] == 1 ){	//right
-						queue.add(new int[] {x,y+1});
+					if( y + 1 < n && matrix[x][y + 1] == 1 ){	//right
+						queue.add(new int[] {x,y + 1});
 					}
 				}
 				
