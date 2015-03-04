@@ -38,10 +38,6 @@ public class UniqueBinarySearchTreesII {
             res.add(null);	// pay attention here!
             return res;
         }
-        if (start == end) {
-            res.add(new TreeNode(start));
-            return res;
-        }
         
         for (int i = start; i <= end; i ++) {
             List<TreeNode> leftList = buildBST(start, i - 1);

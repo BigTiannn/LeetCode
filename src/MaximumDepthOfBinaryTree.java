@@ -32,28 +32,30 @@ public class MaximumDepthOfBinaryTree {
 	
 	// non-recursive (BFS)
 	public int maxDepth2(TreeNode root) {
-		if (root == null)
-			return 0;
+		if (root == null)	return 0;
 		
-		List<Queue<TreeNode>> waitinglist = new ArrayList<>();
-		Queue<TreeNode> q1 = new LinkedList<>();
-		Queue<TreeNode> q2 = new LinkedList<>();
-		waitinglist.add(q1);
-		waitinglist.add(q2);
+		Queue<TreeNode> toVisit = new LinkedList<>();
+		Queue<TreeNode> newToVisit = null;
+		toVisit.add(root);
+		int maxDepth = 0;
 		
-		q1.add(root);
-		int depth = 0;
-		while(!waitinglist.get(depth % 2).isEmpty()) {
-			TreeNode curr = waitinglist.get(depth % 2).poll();
+		while(!toVisit.isEmpty()) {
+		    if (newToVisit == null)
+		        newToVisit = new LinkedList<>();
+		        
+			TreeNode curr = toVisit.poll();
 			if (curr.left != null)
-				waitinglist.get((depth + 1) % 2).add(curr.left);
+				newToVisit.add(curr.left);
 			if (curr.right != null)
-				waitinglist.get((depth + 1) % 2).add(curr.right);
-			if (waitinglist.get(depth % 2).isEmpty())
-				depth ++;
+				newToVisit.add(curr.right);
+			if (toVisit.isEmpty()) {
+				maxDepth ++;
+				toVisit = newToVisit;
+				newToVisit = null;
+			}
 		}
 		
-		return depth;
+		return maxDepth;
 	}
 	
 	public static void main(String[] args) {

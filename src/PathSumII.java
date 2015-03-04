@@ -1,8 +1,3 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Stack;
-
 
 /***
  * http://oj.leetcode.com/problems/path-sum-ii/
@@ -11,6 +6,13 @@ import java.util.Stack;
  * 
  * @author BigTiannn
  */
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Stack;
+
 public class PathSumII {
 	public static class TreeNode {
 		int val;
@@ -58,6 +60,33 @@ public class PathSumII {
 		
 		return result;
 	}
+	
+	// recursion
+	public List<List<Integer>> pathSum_r(TreeNode root, int sum) {
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        
+        getAllPaths(root, sum, res, list);
+        return res;
+    }
+    
+    private void getAllPaths(TreeNode root, int sum, List<List<Integer>> res, List<Integer> list) {
+        if (root == null)   return;
+        
+        list.add(root.val);
+        
+        if (root.left == null && root.right == null && sum == root.val) {
+            res.add(new ArrayList<>(list));
+            // pay attention here: cannot write "return"
+            // we need to pop the last element before returning
+        }
+        
+        getAllPaths(root.left, sum - root.val, res, list);
+        getAllPaths(root.right, sum - root.val, res, list);
+        list.remove(list.size() - 1);
+        
+        return;
+    }
 		
 	public static void main(String[] args) {
 		TreeNode node1 = new TreeNode(5);

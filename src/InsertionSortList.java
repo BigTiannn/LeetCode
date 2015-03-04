@@ -71,13 +71,32 @@ public class InsertionSortList {
 		}
 		System.out.println();
 	}
+	
+	public static ListNode insertionSortList_2(ListNode head) {
+		if (head == null)   return null;
+        
+        ListNode dummy = new ListNode(-1);
+        ListNode curr = head;
+        
+        while (curr != null) {
+            ListNode prev = dummy, tmp = curr.next;
+            while (prev.next != null && prev.next.val <= curr.val) {
+                prev = prev.next;
+            }
+            curr.next = prev.next;
+            prev.next = curr;
+            curr = tmp;
+        }
+        
+        return dummy.next;
+    }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ListNode node1 = new ListNode(2);
 		ListNode node2 = new ListNode(1);
 		node1.next = node2;
-		print(insertionSortList(node1));
+		print(insertionSortList_2(node1));
 		
 		ListNode node3 = new ListNode(3);
 		ListNode node4 = new ListNode(4);

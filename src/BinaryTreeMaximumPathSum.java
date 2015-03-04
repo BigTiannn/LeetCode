@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Stack;
 
-/***
+/**
  * http://oj.leetcode.com/problems/binary-tree-maximum-path-sum/
  * Given a binary tree, find the maximum path sum.
  * The path may start and end at any node in the tree.
@@ -20,8 +20,7 @@ public class BinaryTreeMaximumPathSum {
 	
 	// Post-order traversal
 	public static int maxPathSum(TreeNode root) {
-		if (root == null)
-			return 0;
+		if (root == null)	return 0;
 		
         HashMap<TreeNode, Integer> oneWayPathMap = new HashMap<>();
         Stack<TreeNode> toVisit = new Stack<>();
@@ -54,6 +53,27 @@ public class BinaryTreeMaximumPathSum {
 		int tmp1 = val1 > val2 ? val1 : val2;
 		return tmp1 > val3 ? tmp1 : val3;
 	}
+	
+	
+	// recursion
+	// idea is similar to Maximum Subarray
+	private int maxSum;
+    public int maxPathSum_r(TreeNode root) {
+        maxSum = Integer.MIN_VALUE;
+        dfs(root);
+        return maxSum;
+    }
+    
+    private int dfs(TreeNode root) {
+        if (root == null)   return 0;
+        int left = dfs(root.left);
+        int right = dfs(root.right);
+        int sum = root.val;
+        if (left > 0)   sum += left;
+        if (right > 0)  sum += right;
+        maxSum = Math.max(maxSum, sum);
+        return Math.max(left, right) > 0 ? Math.max(left, right) + root.val : root.val; 
+    }
 	
 	public static void main(String[] args) {
 		TreeNode node1 = new TreeNode(-2);

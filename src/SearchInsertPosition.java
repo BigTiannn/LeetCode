@@ -31,6 +31,23 @@ public class SearchInsertPosition {
             return binarySearch(A, middle + 1, end, target);
     }
 	
+	public int searchInsert_2(int[] A, int target) {
+        int low = 0, high = A.length - 1;
+        int res = 0;
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (A[mid] > target) {
+                high = mid - 1;
+            } else if (A[mid] < target) {
+                low = mid + 1;
+                res = low;
+            } else {
+                return mid;
+            }
+        }
+        return res;
+    }
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int A[] = {1};

@@ -15,6 +15,7 @@ import java.util.List;
 
 public class Subsets {
 	
+	// solution 1
 	public List<List<Integer>> subsets(int[] S) {
 		List<List<Integer>> retlist = new ArrayList<>();
         List<Integer> currlist = new ArrayList<>();
@@ -38,6 +39,37 @@ public class Subsets {
             helper(S, subsetLength, i + 1, retlist, currlist);
             currlist.remove(currlist.size() - 1);
         }
+        
+        return;
+    }
+	
+	// solution 2
+	public List<List<Integer>> subsets_2(int[] S) {
+        List<List<Integer>> res = new ArrayList<>();
+        boolean[] selected = new boolean[S.length];
+        Arrays.fill(selected, false);
+        
+        Arrays.sort(S);
+        generate(S, selected, 0, res);
+        
+        return res;
+    }
+    
+    private void generate(int[] S, boolean[] selected, int step, List<List<Integer>> res) {
+        if (step == S.length) {
+            List<Integer> list = new ArrayList<>();
+            for (int i = 0; i < S.length; i ++) {
+                if (selected[i])   list.add(S[i]); 
+            }
+            res.add(list);
+            return;
+        }
+        
+        selected[step] = false;
+        generate(S, selected, step + 1, res);
+        
+        selected[step] = true;
+        generate(S, selected, step + 1, res);
         
         return;
     }

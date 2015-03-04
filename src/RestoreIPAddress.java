@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-
 /***
  * http://oj.leetcode.com/problems/restore-ip-addresses/
  * Given a string containing only digits, restore it by 
@@ -8,6 +5,10 @@ import java.util.Arrays;
  * 
  * @author BigTiannn
  */
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class RestoreIPAddress {
 	
@@ -50,6 +51,39 @@ public class RestoreIPAddress {
 		}
 		
 		return res;
+    }
+	
+	// implementation 2
+	public List<String> restoreIpAddresses_2(String s) {
+        List<String> res = new ArrayList<>();
+        String[] addr = new String[4];
+        
+        dfs(s, addr, 0, 0, res);
+        
+        return res;
+    }
+    
+    private void dfs(String s, String[] segs, int start, int step, List<String> res) {
+        if (start == s.length() && step == 4) {
+            res.add(segs[0] + "." + segs[1] + "." + segs[2] + "." + segs[3]);
+            return;
+        }
+        
+        // prune
+        if (s.length() - start > (4 - step) * 3 ||
+            s.length() - start < 4 - step)
+            return;
+        
+        int num = 0;
+        for (int i = start; i < Math.min(start + 3, s.length()); i ++) {
+            num = num * 10 + s.charAt(i) - '0';
+            if (num <= 255) {
+                segs[step] = s.substring(start, i + 1);
+                dfs(s, segs, i + 1, step + 1, res);
+            }
+            // don't allow leading zero, but single zero is ok
+            if (num == 0)   break;
+        }
     }
 	
 	public static void main(String[] args) {

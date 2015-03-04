@@ -38,6 +38,28 @@ public class SearchA2DMatrix {
         
         return false;
     }
+	
+	// binary search
+	public boolean searchMatrix_2(int[][] matrix, int target) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        
+        int low = 0, high = m * n - 1;
+        
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            int val = matrix[mid / n][mid % n];
+            if (val > target) {
+                high = mid - 1;
+            } else if (val < target) {
+                low = mid + 1;
+            } else {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

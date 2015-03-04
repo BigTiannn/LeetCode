@@ -25,43 +25,70 @@ public class ConvertSortedListToBinarySearchTree {
 		TreeNode(int x) { val = x; }
 	}
 	
-	// Top-down. Time complexity is O(n^2)
-	public static TreeNode sortedListToBST(ListNode head) {
-		if (head == null)
-			return null;
-		if (head.next == null)
-			return new TreeNode(head.val);
-		
-		// split the list into two parts
-        ListNode slow = head, fast = head;
-        while(fast.next != null && fast.next.next != null) {
-        	slow = slow.next;
-        	fast = fast.next.next;
+	// some idea with "convert from sorted array"
+	// use fast and slow pointers to find middle element
+	// Time Complexity: T(n) = n + T(n / 2) = nlogn
+	public TreeNode sortedListToBST(ListNode head) {
+        return buildBST(head);
+    }
+    
+    private TreeNode buildBST(ListNode head) {
+        if (head == null)    return null;
+        
+        if (head.next == null)  return new TreeNode(head.val);
+        
+        // use fast and slow pointers to get the middle element
+        ListNode prev = head, slow = head, fast = head;
+        while (fast != null && fast.next != null) {
+            prev = slow;
+            slow = slow.next;
+            fast = fast.next.next;
         }
-        ListNode middle = slow.next;
-        slow.next = null;
+        prev.next = null;
         
-        System.out.print("middle: ");
-        System.out.println(middle.val);
-        
-        TreeNode root = new TreeNode(middle.val);
-        root.left = sortedListToBST(head);
-        root.right = sortedListToBST(middle.next);
+        // "slow" is middle element
+        TreeNode root = new TreeNode(slow.val);
+        root.left = buildBST(head);
+        root.right = buildBST(slow.next);
         
         return root;
     }
-	
-	// TODO: Bottom-up!
+    
+    // Bottom-up recursive
+    ListNode listHead;	// pay attention here! java pass by value, so we need a member variable
+    public TreeNode sortedListToBST_recusive(ListNode head) {
+        this.listHead = head;
+        
+        int len = 0;
+        ListNode ptr = head;
+        while (ptr != null) {
+            ptr = ptr.next;
+            len ++;
+        }
+        
+        return buildBST(0, len - 1);
+    }
+    
+    private TreeNode buildBST(int start, int end) {
+        if (start > end)    return null;
+        
+        int mid = (start + end) / 2;
+        TreeNode left = buildBST(start, mid - 1);
+        TreeNode root = new TreeNode(listHead.val);
+        root.left = left;
+        listHead = listHead.next;	// pay attention here(this is why we need a member variable)
+        // if we don't want a variable, we can do a trick
+//        if (head.next != null) { // "move to next"  
+//        	head.val = head.next.val;  
+//        	head.next = head.next.next;  
+//        	root.right = buildBST(head, mid + 1, end);  
+//        }  
+        root.right = buildBST(mid + 1, end);
+        return root;
+    }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		ListNode node1 = new ListNode(3);
-		ListNode node2 = new ListNode(5);
-		ListNode node3 = new ListNode(8);
-		node1.next = node2;
-		node2.next = node3;
-		
-		sortedListToBST(node1);
 	}
 
 }

@@ -51,18 +51,19 @@ public class MergeSortedArray {
 	
 	// traverse the two arrays backwards
 	public static void merge2(int A[], int m, int B[], int n)  {
-		int i = m - 1, j = n - 1, index = m + n - 1;
-		for (; i >= 0 && j >= 0; index --) {
-			if (A[i] >= B[j]) {
-				A[index] = A[i --];
-			} else {
-				A[index] = B[j --];
-			}
-		}
-		for (; j >= 0; index --, j --)
-			A[index] = B[j];
-		
-		return;
+		int ia = m - 1, ib = n - 1, i = m + n - 1;
+        while (ia >= 0 && ib >= 0) {
+            if (A[ia] >= B[ib]) {
+                A[i --] = A[ia --];
+            } else {
+                A[i --] = B[ib --];
+            }
+        }
+        while (ib >= 0) {
+            A[i --] = B[ib --];
+        }
+        
+        return;
 	}
 
 	public static void main(String[] args) {

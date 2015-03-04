@@ -17,6 +17,7 @@ import java.util.List;
 
 public class PalindromePartitioning {
 	
+	// time complexity O(2^(n - 1))
 	public List<List<String>> partition(String s) {
         List<List<String>> reslist = new ArrayList<>();
         List<String> list = new ArrayList<>();

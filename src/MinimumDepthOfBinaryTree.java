@@ -54,6 +54,18 @@ public class MinimumDepthOfBinaryTree {
         
         return minDepth;
     }
+	
+	// recursive
+	public int minDepth_r(TreeNode root) {
+		return minDepth(root, false); 
+    }
+    
+    private int minDepth(TreeNode root, boolean hasSibling) {
+        if (root == null)
+            return hasSibling ? Integer.MAX_VALUE : 0;
+        
+        return Math.min(minDepth(root.left, root.right != null), minDepth(root.right, root.left != null)) + 1;
+    }
 
 	public static void main(String[] args) {
 		

@@ -24,7 +24,7 @@ public class MergeKSortedLists {
 	}
 	
 	/**
-	 * Solution 1
+	 * Solution 1.1
 	 * Divide-and-Conquer: everytime merge lists.get(i) and lists.get(i + (n+1)/2)
 	 * T(k) = 2T(k/2) + O(nk), time complexity is O(nklogk)
 	 * Run Time on LeetCode platform: 600ms.
@@ -38,10 +38,8 @@ public class MergeKSortedLists {
 		int n = lists.size();
 		while (n > 1) {
 			int m = (n + 1) / 2;
-			System.out.println(m);
 			for (int i = 0; i < n / 2; i ++) {
 				ListNode l = mergeTwoLists(lists.get(i), lists.get(i + m));
-				print(l);
 				lists.remove(i);
 				lists.add(i, l);
 			}
@@ -51,6 +49,28 @@ public class MergeKSortedLists {
         return lists.get(0);
     }
 	
+	/**
+	 * Solution 1.2
+	 * Divide-and-Conquer: everytime merge lists.get(i) and lists.get(i + (n+1)/2)
+	 * T(k) = 2T(k/2) + O(nk), time complexity is O(nklogk)
+	 * Run Time on LeetCode platform: 229ms.
+	 * @param lists
+	 * @return
+	 */
+	public ListNode mergeKLists_1(List<ListNode> lists) {
+        if (lists == null || lists.size() == 0) return null;
+        
+        return helper(lists, 0, lists.size() - 1);
+    }
+    
+    private ListNode helper(List<ListNode> lists, int l, int r) {
+        if (l < r) {
+            int m = (l + r) / 2;
+            return mergeTwoLists(helper(lists, l, m),helper(lists, m + 1, r));
+        }
+        return lists.get(l);  
+    }
+    
 	public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
 		ListNode ptr = new ListNode(-1);
 		ListNode head = ptr;
