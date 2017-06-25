@@ -10,17 +10,17 @@ public class Pow {
 	public static double pow(double x, int n) {
 		if (n == 0)	return 1;
         
-        long absN = Math.abs((long)n);
-        double res = 1;
-        while (absN > 0) {
-            if ((absN & 1) == 1)	// n is odd number
-                res = res * x;
-            x *= x;
-            absN >>= 1;			    // n = n / 2 
-        }
-        
-        return (n < 0) ? 1.0 / res : res;
+    long absN = Math.abs((long)n);
+    double res = 1;
+    while (absN > 0) {
+      if ((absN & 1) == 1)	// n is odd number
+        res = res * x;
+        x *= x;
+        absN >>= 1;			    // n = n / 2 
     }
+        
+    return (n < 0) ? 1.0 / res : res;
+  }
 	
 	// recursive
 	public double pow_2(double x, int n) {

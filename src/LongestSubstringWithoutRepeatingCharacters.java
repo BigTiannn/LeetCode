@@ -17,16 +17,16 @@ public class LongestSubstringWithoutRepeatingCharacters {
 		// This hashmap is used to record the position of latest occurrence
 		HashMap<Character, Integer> position = new HashMap<>();
         
-        for (int i = 0; i < s.length(); i ++) {
-        	// current substring already contains the character
-        	if (position.containsKey(s.charAt(i)) && position.get(s.charAt(i)) >= start) {
-        		maxLen = Math.max(maxLen, i - start);
-        		start = position.get(s.charAt(i)) + 1;
-        	}
-            position.put(s.charAt(i), i);
-        }
-        return Math.max(maxLen, s.length() - start);
+    for (int i = 0; i < s.length(); i ++) {
+      // current substring already contains the character
+      if (position.containsKey(s.charAt(i)) && position.get(s.charAt(i)) >= start) {
+        maxLen = Math.max(maxLen, i - start);
+        start = position.get(s.charAt(i)) + 1;
+      }
+      position.put(s.charAt(i), i);
     }
+    return Math.max(maxLen, s.length() - start);
+  }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
