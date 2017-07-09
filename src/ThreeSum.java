@@ -18,35 +18,33 @@ public class ThreeSum {
 		List<List<Integer>> ret = new ArrayList<>();
 		
 		Arrays.sort(num);
-        for (int i = 0; i < num.length - 2; i ++) {
-        	// avoid duplicated answers
-            if (i > 0 && num[i] == num[i - 1])
-        		continue;
+    for (int i = 0; i < num.length - 2; i ++) {
+      // avoid duplicated answers
+      if (i > 0 && num[i] == num[i - 1])  continue;
         		
-        	int m = i + 1, n = num.length - 1;
-        	while (m < n) {
-        		if (num[m] + num[n] + num[i] < target) {
-        			m ++;
-        		} else if (num[m] + num[n] + num[i] > target) {
-        			n --;
-        		} else {
-        			List<Integer> l = new ArrayList<>();
-        			l.add(num[i]);
-        			l.add(num[m]);
-        			l.add(num[n]);
-        			ret.add(l);
-        			m ++;
-        			n --;
-        			// avoid duplicated answers
-        			while (m < n && num[m] == num[m - 1])
-        			    m ++;
-        			while (n > m && num[n] == num[n + 1])
-        			    n --;
-        		}
+      int m = i + 1, n = num.length - 1;
+      while (m < n) {
+        if (num[m] + num[n] + num[i] < target) {
+        	m ++;
+        } else if (num[m] + num[n] + num[i] > target) {
+        	n --;
+        } else {
+        	List<Integer> l = new ArrayList<>();
+        	l.add(num[i]);
+        	l.add(num[m]);
+        	l.add(num[n]);
+        	ret.add(l);
+        	m ++;
+        	n --;
+        	// avoid duplicated answers
+        	while (m < n && num[m] == num[m - 1])
+        		m ++;
+        	while (n > m && num[n] == num[n + 1])
+        		n --;
         	}
         }
-        
-        return ret;
+      }  
+      return ret;
     }
 	
 	public static void main(String[] args) {

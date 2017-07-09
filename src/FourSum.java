@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class fourSum {
+public class FourSum {
 	
 	public static List<List<Integer>> fourSum(int[] num, int target) {
         List<List<Integer>> ret = new ArrayList<>();
