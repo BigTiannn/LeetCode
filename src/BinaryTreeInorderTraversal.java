@@ -15,25 +15,57 @@ public class BinaryTreeInorderTraversal {
 	
 	public static List<Integer> inorderTraversal(TreeNode root) {
 		List<Integer> trace = new ArrayList<>();
-	    Stack<TreeNode> toVisit = new Stack<>();
+	  Stack<TreeNode> toVisit = new Stack<>();
 	        
-	    if (root == null)
-	    	return trace;
+	  if (root == null)  return trace;
 	            
-	    TreeNode curr = root;
-	    while(!toVisit.isEmpty() || curr != null) {
-	    	if (curr != null){
-	    		toVisit.push(curr);
-	    		curr = curr.left;
-	    	} else {
-	    		curr = toVisit.pop();
-	    		trace.add(curr.val);
-	    		curr = curr.right;
-	    	}
+	  TreeNode curr = root;
+	  while(!toVisit.isEmpty() || curr != null) {
+	    if (curr != null){
+	    	toVisit.push(curr);
+	    	curr = curr.left;
+	    } else {
+	    	curr = toVisit.pop();
+	    	trace.add(curr.val);
+	    	curr = curr.right;
 	    }
-	    
-	    return trace;
+	  }  
+	  return trace;
+  }
+	
+	/**
+	 * Morris Traversal
+	 * time complexity: O(n) (every edge is visited at most twice)
+	 * space complexity: O(1)
+	 * @param root
+	 * @return
+	 */
+	public static List<Integer> solution2(TreeNode root) {
+	  List<Integer> res = new ArrayList<>();
+	  TreeNode curr = root, prev = null;
+	  
+	  while (curr != null) {
+      if (curr.left == null) {
+        res.add(curr.val);
+        curr = curr.right;
+      } else {
+        prev = curr.left;
+        while (prev.right != null && prev.right != curr) { // find the rightmost child of the left sub-tree
+          prev = prev.right;
+        }
+        if (prev.right == null) {  // assign curr to the rightmost non-empty child
+          prev.right = curr;
+          curr = curr.left;
+        } else {                 // the left sub-tree is all visited, recover the right child to its original
+          prev.right = null;
+          res.add(curr.val);
+          curr = curr.right;
+        }
+      }
     }
+	  
+	  return res;
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
