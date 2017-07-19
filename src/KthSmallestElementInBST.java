@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 /**
  * https://leetcode.com/problems/kth-smallest-element-in-a-bst/#/description
  * Given a binary search tree, write a function kthSmallest to find the kth 
@@ -22,8 +24,23 @@ public class KthSmallestElementInBST {
     }
   }
   
+  // use in-order traversal
   public int kthSmallest(TreeNode root, int k) {
-    return 0;
+    Stack<TreeNode> stack = new Stack<>();
+    TreeNode curr = root;
+    int count = 0;
+    while (!stack.isEmpty() || curr != null) {
+        if (curr == null) {
+            curr = stack.pop();
+            count ++;
+            if (count == k) break;
+            curr = curr.right;
+        } else {
+            stack.push(curr);
+            curr = curr.left;
+        }
+    }
+    return curr.val;
   }
   
   public static void main(String[] args) {
