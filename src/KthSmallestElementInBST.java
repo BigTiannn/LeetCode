@@ -43,6 +43,10 @@ public class KthSmallestElementInBST {
     return curr.val;
   }
   
+  // follow-up: if can change the structure of the tree,
+  // add one more attribute --- leftCount
+  // then the time complexity is O(height of the BST)
+  
   public static void main(String[] args) {
     // TODO Auto-generated method stub
 
