@@ -10,37 +10,39 @@
  */
 public class BuyAndSellStockII {
 	
-	public static int maxProfit(int[] prices) {
+	public static int solution1(int[] prices) {
 		if (prices == null || prices.length < 2)
 			return 0;
 		
-        int buy = 0, sell = 1;
-        int total_profit = 0;
-        while (sell < prices.length) {
-        	while (sell < prices.length && prices[buy] >= prices[sell]) {
-        		buy ++;
-        		sell ++;
-        	}
-        	if (sell >= prices.length)
-        		break;
-        	int new_sell = sell + 1;
-        	while (new_sell < prices.length && prices[new_sell] >= prices[sell]) {
-        		new_sell ++;
-        		sell ++;
-        	}
-        	total_profit += prices[sell] - prices[buy];
-        	buy = new_sell;
-        	sell = buy + 1;
-        }
-        
-        return total_profit;
+		int profit = 0, i = 0;
+    while (i < prices.length) {
+      // find next local minimum
+      while (i < prices.length-1 && prices[i+1] <= prices[i]) i++;
+      int min = prices[i++]; // need increment to avoid infinite loop for "[1]"
+      // find next local maximum
+      while (i < prices.length-1 && prices[i+1] >= prices[i]) i++;
+      profit += i < prices.length ? prices[i++] - min : 0;
     }
+    return profit;
+  }
 
+	public static int solution2(int[] prices) {
+	  if (prices == null || prices.length < 2)
+      return 0;
+	  
+	  int profit = 0;
+    for (int i = 0; i < prices.length - 1; i ++) {
+      if (prices[i + 1] > prices[i])
+        profit += prices[i + 1] - prices[i];
+    }
+    return profit;
+	}
+	
 	public static void main(String[] args) {
 		int[] prices = {2, 1, 2, 0, 1};
 //		int[] prices = {6,1,3,2,4,7};
 //		int[] prices = {2,1};
-		System.out.println(maxProfit(prices));
+		System.out.println(solution1(prices));
 	}
 
 }
