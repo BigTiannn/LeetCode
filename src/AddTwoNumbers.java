@@ -22,44 +22,25 @@ public class AddTwoNumbers {
 	}
 	
 	public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-		ListNode head = new ListNode(-1);
-		ListNode prev = head;
-		int carry = 0;
-        while (l1 != null && l2 != null) {
-        	int sum = l1.val + l2.val + carry;
-        	carry = sum /10;
-        	ListNode curr = new ListNode(sum % 10);
-        	prev.next = curr;
-        	prev = curr;
-        	l1 = l1.next;
-        	l2 = l2.next;
-        }
-        
-        while (l1 != null) {
-        	int sum = l1.val + carry;
-        	carry = sum /10;
-        	ListNode curr = new ListNode(sum % 10);
-        	prev.next = curr;
-        	prev = curr;
-        	l1 = l1.next;
-        }
-        
-        while (l2 != null) {
-        	int sum = l2.val + carry;
-        	carry = sum /10;
-        	ListNode curr = new ListNode(sum % 10);
-        	prev.next = curr;
-        	prev = curr;
-        	l2 = l2.next;
-        }
-        
-        if (carry != 0) {
-        	ListNode curr = new ListNode(carry);
-        	prev.next = curr;
-        }
-        	
-        return head.next;
+	  ListNode prev = new ListNode(0), head = prev;
+    int carry = 0;
+    while (l1 != null || l2 != null || carry != 0) {
+      int sum = 0;
+      if (l1 != null) {
+        sum += l1.val;
+        l1 = l1.next;
+      }
+      if (l2 != null) {
+        sum += l2.val;
+        l2 = l2.next;
+      }
+      ListNode node = new ListNode((sum + carry) % 10);
+      carry = (sum + carry) / 10;
+      prev.next = node;
+      prev = node;
     }
+    return head.next;	
+  }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
