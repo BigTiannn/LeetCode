@@ -22,18 +22,18 @@ public class SortColors {
 	public void sortColors(int[] A) {
 		int count[] = new int[3];
         
-        for (int i = 0; i < A.length; i ++) {
-            count[A[i]] ++;
-        }
-        
-        int counter = 0;
-        for (int i = 0; i < 3; i ++) {
-            for (int j = 0; j < count[i]; j ++) {
-                A[counter ++] = i;
-            }
-        }
-        return;
+    for (int i = 0; i < A.length; i ++) {
+      count[A[i]] ++;
     }
+        
+    int counter = 0;
+    for (int i = 0; i < 3; i ++) {
+      for (int j = 0; j < count[i]; j ++) {
+        A[counter ++] = i;
+      }
+    }
+    return;
+  }
 	
 	// one passes, two pointers
 	public static void sortColors_2(int[] A) {
@@ -44,7 +44,7 @@ public class SortColors {
 			} else if (A[i] == BLUE) {
 				swap(A, i, blue --);
 			} else
-			    i ++;
+			  i ++;
 		}
 	}
 	
