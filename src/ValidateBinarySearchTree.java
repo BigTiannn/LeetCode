@@ -19,55 +19,55 @@ public class ValidateBinarySearchTree {
 	}
 	
 	public boolean isValidBST(TreeNode root) {
-        List<Integer> trace = inOrderTraversal(root);
-        
-        for (int i = 1; i < trace.size(); i ++) {
-            if (trace.get(i) <= trace.get(i - 1))
-                return false;
-        }
-        
-        return true;
+    List<Integer> trace = inOrderTraversal(root);
+    
+    for (int i = 1; i < trace.size(); i ++) {
+      if (trace.get(i) <= trace.get(i - 1))
+        return false;
     }
     
-    public List<Integer> inOrderTraversal(TreeNode root) {
-        List<Integer> trace = new ArrayList<>();
-        Stack<TreeNode> toVisit = new Stack<>();
+    return true;
+  }
+    
+  public List<Integer> inOrderTraversal(TreeNode root) {
+    List<Integer> trace = new ArrayList<>();
+    Stack<TreeNode> toVisit = new Stack<>();
+    
+    if (root == null)
+      return trace;
         
-        if (root == null)
-            return trace;
-            
-        TreeNode curr = root;
-        while(!toVisit.isEmpty() || curr != null) {
-            if (curr != null){
-                toVisit.push(curr);
-                curr = curr.left;
-            } else {
-                curr = toVisit.pop();
-                trace.add(curr.val);
-                curr = curr.right;
-            }
-        }
-        
-        return trace;
+    TreeNode curr = root;
+    while(!toVisit.isEmpty() || curr != null) {
+      if (curr != null){
+        toVisit.push(curr);
+        curr = curr.left;
+      } else {
+        curr = toVisit.pop();
+        trace.add(curr.val);
+        curr = curr.right;
+      }
     }
     
-    /*
-     * Solution 2: recursive with [min, max]
-     */
-    public boolean isValidBST_2(TreeNode root) {
-        return checkBST(root, null, null);
-    }
+    return trace;
+  }
     
-    public boolean checkBST(TreeNode root, Integer max, Integer min) {
-        if (root == null)
-            return true;
-            
-        if (max != null && root.val >= max ||
-            min != null && root.val <= min)
-            return false;
+  /*
+   * Solution 2: recursive with [min, max]
+   */
+  public boolean isValidBST_2(TreeNode root) {
+    return checkBST(root, null, null);
+  }
+  
+  private boolean checkBST(TreeNode root, Integer max, Integer min) {
+    if (root == null)
+      return true;
         
-        return checkBST(root.left, root.val, min) && checkBST(root.right, max, root.val);
-    }
+    if (max != null && root.val >= max ||
+      min != null && root.val <= min)
+      return false;
+    
+    return checkBST(root.left, root.val, min) && checkBST(root.right, max, root.val);
+  }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
