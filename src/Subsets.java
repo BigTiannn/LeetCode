@@ -18,61 +18,81 @@ public class Subsets {
 	// solution 1
 	public List<List<Integer>> subsets(int[] S) {
 		List<List<Integer>> retlist = new ArrayList<>();
-        List<Integer> currlist = new ArrayList<>();
+    List<Integer> currlist = new ArrayList<>();
+    
+    Arrays.sort(S);
         
-        Arrays.sort(S);
-            
-        for (int i = 0; i <= S.length; i ++)
-            helper(S, i, 0, retlist, currlist);
-        
-        return retlist;
-    }
+    for (int i = 0; i <= S.length; i ++)
+      helper(S, i, 0, retlist, currlist);
+    
+    return retlist;
+  }
 	
 	public void helper(int[] S, int subsetLength, int start, List<List<Integer>> retlist, List<Integer> currlist) {
-        if (currlist.size() == subsetLength) {
-            retlist.add(new ArrayList<Integer>(currlist));
-            return;
-        }
-        
-        for (int i = start; i < S.length; i ++) {
-            currlist.add(S[i]);
-            helper(S, subsetLength, i + 1, retlist, currlist);
-            currlist.remove(currlist.size() - 1);
-        }
-        
-        return;
+    if (currlist.size() == subsetLength) {
+      retlist.add(new ArrayList<Integer>(currlist));
+      return;
     }
+    
+    for (int i = start; i < S.length; i ++) {
+      currlist.add(S[i]);
+      helper(S, subsetLength, i + 1, retlist, currlist);
+      currlist.remove(currlist.size() - 1);
+    }
+    
+    return;
+  }
 	
 	// solution 2
 	public List<List<Integer>> subsets_2(int[] S) {
-        List<List<Integer>> res = new ArrayList<>();
-        boolean[] selected = new boolean[S.length];
-        Arrays.fill(selected, false);
-        
-        Arrays.sort(S);
-        generate(S, selected, 0, res);
-        
-        return res;
+    List<List<Integer>> res = new ArrayList<>();
+    boolean[] selected = new boolean[S.length];
+    Arrays.fill(selected, false);
+    
+    Arrays.sort(S);
+    generate(S, selected, 0, res);
+    
+    return res;
+  }
+    
+  private void generate(int[] S, boolean[] selected, int step, List<List<Integer>> res) {
+    if (step == S.length) {
+      List<Integer> list = new ArrayList<>();
+      for (int i = 0; i < S.length; i ++) {
+        if (selected[i])   list.add(S[i]); 
+      }
+      res.add(list);
+      return;
     }
     
-    private void generate(int[] S, boolean[] selected, int step, List<List<Integer>> res) {
-        if (step == S.length) {
-            List<Integer> list = new ArrayList<>();
-            for (int i = 0; i < S.length; i ++) {
-                if (selected[i])   list.add(S[i]); 
-            }
-            res.add(list);
-            return;
+    selected[step] = false;
+    generate(S, selected, step + 1, res);
+    
+    selected[step] = true;
+    generate(S, selected, step + 1, res);
+    
+    return;
+  }
+    
+  // solution 3: bit operation
+  public List<List<Integer>> subsets_3(int[] nums) {
+    int n = nums.length, m = (int) Math.pow(2, n);
+    List<List<Integer>> res = new ArrayList<>();
+    
+    for (int i = 0; i < m; i ++) {
+      List<Integer> list = new ArrayList<>();
+      int tmp = i;
+      for (int j = 0; j < n; j ++) {
+        if ((tmp & 1) == 1) {
+          list.add(nums[j]);
         }
-        
-        selected[step] = false;
-        generate(S, selected, step + 1, res);
-        
-        selected[step] = true;
-        generate(S, selected, step + 1, res);
-        
-        return;
+        tmp >>= 1;
+      }
+      res.add(list);
     }
+    return res;
+}
+
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
