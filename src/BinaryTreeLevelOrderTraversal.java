@@ -24,8 +24,7 @@ public class BinaryTreeLevelOrderTraversal {
 	public List<List<Integer>> levelOrder(TreeNode root) {
 		List<List<Integer>> retList = new ArrayList<>();
 		
-		if (root == null)
-			return retList;
+		if (root == null) return retList;
 		
 		LinkedList<TreeNode> toVisit = new LinkedList<>();
 		toVisit.add(root);
@@ -35,17 +34,14 @@ public class BinaryTreeLevelOrderTraversal {
 			for (int i = 0; i < n; i ++) {
 				TreeNode curr = toVisit.poll();
 				list.add(curr.val);
-				if (curr.left != null)
-					toVisit.add(curr.left);
-				if (curr.right != null)
-					toVisit.add(curr.right);
+				if (curr.left != null)  toVisit.add(curr.left);
+				if (curr.right != null) toVisit.add(curr.right);
 			}
-			
 			retList.add(list);
 		}
 		
 		return retList;
-    }
+  }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
