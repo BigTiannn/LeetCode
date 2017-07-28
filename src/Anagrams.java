@@ -22,35 +22,35 @@ public class Anagrams {
 	 */
 	public List<String> anagrams(String[] strs) {
 		// The key is the sorted string. Because if two strings are anagrams, their sorted results are the same.
-        HashMap<String, List<String>> map = new HashMap<>();
-        List<String> res = new ArrayList<>();
-        
-        for (String s : strs) {
-            String sortedStr = sortStr(s);
-            if (!map.containsKey(sortedStr)) {
-                List<String> list = new ArrayList<>();
-                map.put(sortedStr, list);
-            } 
-            map.get(sortedStr).add(s);
-        }
-        
-        // interate the hashmap and collect all groups of anagrams to the returned list
-        Iterator it = map.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry entry = (Map.Entry)it.next();
-            ArrayList<String> list = (ArrayList<String>) entry.getValue();
-            if (list.size() > 1)
-                res.addAll(list);
-        }
-        
-        return res;
-    }
+    HashMap<String, List<String>> map = new HashMap<>();
+      List<String> res = new ArrayList<>();
+      
+      for (String s : strs) {
+        String sortedStr = sortStr(s);
+        if (!map.containsKey(sortedStr)) {
+          List<String> list = new ArrayList<>();
+          map.put(sortedStr, list);
+        } 
+        map.get(sortedStr).add(s);
+      }
+      
+      // interate the hashmap and collect all groups of anagrams to the returned list
+      Iterator it = map.entrySet().iterator();
+      while (it.hasNext()) {
+        Map.Entry entry = (Map.Entry)it.next();
+        ArrayList<String> list = (ArrayList<String>) entry.getValue();
+        if (list.size() > 1)
+          res.addAll(list);
+      }
+      
+      return res;
+  }
 	
 	public String sortStr(String s) {
-        char[] charArray = s.toCharArray();
-        Arrays.sort(charArray);
-        return new String(charArray);
-    }
+    char[] charArray = s.toCharArray();
+    Arrays.sort(charArray);
+    return new String(charArray);
+  }
 
 	public static void main(String[] args) {
 		String[] strs = {"abc", "bca", "bac", "bbb", "bbca", "abcb"};
