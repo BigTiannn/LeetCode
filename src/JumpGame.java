@@ -1,10 +1,20 @@
 import java.util.Arrays;
 
 /***
- * http://oj.leetcode.com/problems/jump-game/
+ * https://leetcode.com/problems/jump-game/tabs/description
+ * 
+ * Given an array of non-negative integers, you are initially positioned 
+ * at the first index of the array.
+ * Each element in the array represents your maximum jump length at that position.
+ * Determine if you are able to reach the last index.
+ * 
+ * For example:
+ * A = [2,3,1,1,4], return true.
+ * A = [3,2,1,0,4], return false.
  * 
  * @author BigTiannn
  */
+
 public class JumpGame {
 	
 	public static boolean canJump(int[] A) {
@@ -13,8 +23,8 @@ public class JumpGame {
 			if (i + A[i] > farthest)
 				farthest = i + A[i];
 		}
-        return farthest >= A.length - 1;
-    }
+    return farthest >= A.length - 1;
+  }
 
 	public static void main(String[] args) {
 //		int[] test = {2, 3, 1, 1, 4};
