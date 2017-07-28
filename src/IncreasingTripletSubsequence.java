@@ -48,6 +48,7 @@ public class IncreasingTripletSubsequence {
     }
     return false;
   }
+  
   public static void main(String[] args) {
     // TODO Auto-generated method stub
     int test[] = {2, 4, -2, -3};
