@@ -7,7 +7,7 @@
 
 public class MaximumProductSubarray {
 	
-	public static int maxProduct(int[] A) {
+	public static int solution1 (int[] A) {
 		if (A.length == 0)
 			return -1;
 		
@@ -26,7 +26,18 @@ public class MaximumProductSubarray {
 		}
 		
 		return maxProduct;
+  }
+	
+	public int solution2(int[] nums) {
+    int ret = nums[0], currMax = nums[0], currMin = nums[0];
+    for (int i = 1; i < nums.length; i ++) {
+      int temp = currMax;
+      currMax = Math.max(Math.max(currMin * nums[i], currMax * nums[i]), nums[i]);
+      currMin = Math.min(Math.min(currMin * nums[i], temp * nums[i]), nums[i]);
+      ret = Math.max(ret, currMax);
     }
+    return ret;
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -47,11 +58,11 @@ public class MaximumProductSubarray {
 //		System.out.println(MaximumProductSubarray.maxProduct(A4));
 //		System.out.println(MaximumProductSubarray.maxProduct(A5));
 //		System.out.println(MaximumProductSubarray.maxProduct(A6));
-		System.out.println(MaximumProductSubarray.maxProduct(A7));
-		System.out.println(MaximumProductSubarray.maxProduct(A8));
-		System.out.println(MaximumProductSubarray.maxProduct(A9));
-		System.out.println(MaximumProductSubarray.maxProduct(A10));
-		System.out.println(MaximumProductSubarray.maxProduct(A11));
+		System.out.println(MaximumProductSubarray.solution1(A7));
+		System.out.println(MaximumProductSubarray.solution1(A8));
+		System.out.println(MaximumProductSubarray.solution1(A9));
+		System.out.println(MaximumProductSubarray.solution1(A10));
+		System.out.println(MaximumProductSubarray.solution1(A11));
 	}
 
 }
