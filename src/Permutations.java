@@ -1,6 +1,16 @@
 /**
  * http://oj.leetcode.com/problems/permutations/
  * Given a collection of numbers, return all possible permutations.
+ * For example,
+ * [1,2,3] have the following permutations:
+ * [
+ *  [1,2,3],
+ *  [1,3,2],
+ *  [2,1,3],
+ *  [2,3,1],
+ *  [3,1,2],
+ *  [3,2,1]
+ * ]
  * 
  * @author BigTiannn {12-06-2014}
  */
@@ -15,53 +25,51 @@ public class Permutations {
 	 * loop through the array, add a new element to the previous result in each iteration
 	 */
 	public static ArrayList<ArrayList<Integer>> permute(int[] num) {
-        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
-        if (num == null)
-        	return result;
-        
-        result.add(new ArrayList<Integer>());
-        for (int i = 0; i < num.length; i ++) {
-        	ArrayList<ArrayList<Integer>> current = new ArrayList<>();
-        	
-        	for (ArrayList<Integer> list : result) {
-        		for (int j = 0; j <= list.size(); j ++) {
-        			list.add(j, num[i]);
-        			ArrayList<Integer> tmp = new ArrayList<>(list);
-        			current.add(tmp);
-        			list.remove(j);
-        		}
-        	}
-        	result = new ArrayList<ArrayList<Integer>>(current);
-        }
-        
-        return result;
-    }
-	
-	// recursive implementation
-	public List<List<Integer>> permute_r(int[] num) {
-        List<List<Integer>> res = new ArrayList<>();
-        List<Integer> list = new ArrayList<>();
-        boolean[] visited = new boolean[num.length];
-        helper(num, 0, res, list, visited);
-        return res;
+    ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+    if (num == null)  return result;
+    
+    result.add(new ArrayList<Integer>());
+    for (int i = 0; i < num.length; i ++) {
+    	ArrayList<ArrayList<Integer>> current = new ArrayList<>();
+    	
+    	for (ArrayList<Integer> list : result) {
+    		for (int j = 0; j <= list.size(); j ++) {
+    			list.add(j, num[i]);
+    			ArrayList<Integer> tmp = new ArrayList<>(list);
+    			current.add(tmp);
+    			list.remove(j);
+    		}
+    	}
+    	result = new ArrayList<ArrayList<Integer>>(current);
     }
     
-    public void helper(int[] num, int step, List<List<Integer>> res, List<Integer> list, boolean[] visited) {
-        if (step == num.length) {
-            res.add(new ArrayList<Integer>(list));
-            return;
-        }
-        
-        for (int i = 0; i < num.length; i ++) {
-            if (visited[i])
-                continue;
-            visited[i] = true;;
-            list.add(num[i]);
-            helper(num, step + 1, res, list, visited);
-            list.remove(list.size() - 1);
-            visited[i] = false;
-        }
+    return result;
+  }
+	
+	// recursive implementation
+	public static List<List<Integer>> permute_r(int[] num) {
+    List<List<Integer>> res = new ArrayList<>();
+    List<Integer> list = new ArrayList<>();
+    boolean[] visited = new boolean[num.length];
+    helper(num, 0, res, list, visited);
+    return res;
+  }
+    
+  public static void helper(int[] num, int step, List<List<Integer>> res, List<Integer> list, boolean[] visited) {
+    if (step == num.length) {
+      res.add(new ArrayList<Integer>(list));
+      return;
     }
+    
+    for (int i = 0; i < num.length; i ++) {
+      if (visited[i]) continue;
+      visited[i] = true;;
+      list.add(num[i]);
+      helper(num, step + 1, res, list, visited);
+      list.remove(list.size() - 1);
+      visited[i] = false;
+    }
+  }
 	
 	// recursive implementation 2
 	public static void perm(int[] num, int start, ArrayList<ArrayList<Integer>> result) {
@@ -76,8 +84,7 @@ public class Permutations {
 			swap(num, start, i);
 			perm(num, start + 1, result);
 			swap(num, start, i);
-		}
-			
+		}	
 	}
 	
 	public static void swap(int[] num, int i, int j) {
@@ -87,16 +94,16 @@ public class Permutations {
 	}
 	
 	public static void main(String[] args) {
+		int[] num = {6, 3, 2, 7, 4, 1};
+		List<List<Integer>> res = permute_r(num);
+		for(List<Integer> list : res)
+			System.out.println(Arrays.toString(list.toArray()));
+		
 //		int[] num = {1, 2, 3};
-//		ArrayList<ArrayList<Integer>> res = permute(num);
+//		ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+//		perm(num, 0, res);
 //		for(ArrayList<Integer> list : res)
 //			System.out.println(Arrays.toString(list.toArray()));
-		
-		int[] num = {1, 2, 3};
-		ArrayList<ArrayList<Integer>> res = new ArrayList<>();
-		perm(num, 0, res);
-		for(ArrayList<Integer> list : res)
-			System.out.println(Arrays.toString(list.toArray()));
 	}
 
 }
