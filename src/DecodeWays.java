@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * https://oj.leetcode.com/problems/decode-ways/
  * A message containing letters from A-Z is being encoded to numbers using the following mapping:
@@ -15,35 +17,34 @@
  */
 public class DecodeWays {
 	
-	public int numDecodings(String s) {
-        if (s == null || s.length() == 0)
-            return 0;
-            
-        int[] ways = new int[s.length() + 1];
-        ways[0] = 1;
-        ways[1] = s.charAt(0) == '0' ? 0 : 1;
+	public int solution(String s) {
+    if (s == null || s.length() == 0)
+      return 0;
         
-        for (int i = 1; i < s.length(); i ++) {
-            if (isValid(s.substring(i, i + 1))) {
-                ways[i + 1] = ways[i];
-            }
-            if (isValid(s.substring(i - 1, i + 1))) {
-                ways[i + 1] += ways[i - 1];
-            }
-        }
-        
-        return ways[s.length()];
+    int[] ways = new int[s.length() + 1];
+    ways[0] = 1;
+    ways[1] = s.charAt(0) == '0' ? 0 : 1;
+    
+    for (int i = 1; i < s.length(); i ++) {
+      if (isValid(s.substring(i, i + 1)))       ways[i + 1] = ways[i];
+      if (isValid(s.substring(i - 1, i + 1)))   ways[i + 1] += ways[i - 1];
     }
     
-    public boolean isValid(String s) {
-        if (s.charAt(0) == '0')
-            return false;
-        int val = Integer.parseInt(s);
-        return val > 0 && val <= 26;
-    }
+    return ways[s.length()];
+  }
+    
+  private boolean isValid(String s) {
+    if (s.charAt(0) == '0') return false;
+    int val = Integer.parseInt(s);
+    return val > 0 && val <= 26;
+  }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+	  DecodeWays test = new DecodeWays();
+	  System.out.println(test.solution("27"));
+	  System.out.println(test.solution("11"));
+	  System.out.println(test.solution("002"));
 	}
 
 }
