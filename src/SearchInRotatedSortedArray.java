@@ -13,32 +13,31 @@
 public class SearchInRotatedSortedArray {
 	
 	public int search(int[] A, int target) {
-        int low = 0, high = A.length - 1;
-        while (low <= high) {
-            int mid = (low + high) / 2;
-            if (A[mid] == target)
-                return mid;
-                
-            // the pivot is in the second half of A
-            if (A[low] <= A[mid]) {
-                if (target < A[mid] && target >= A[low]) {
-                    high = mid - 1;
-                } else {
-                    low = mid + 1;
-                }
-            }
-            // the pivot is in the first half of A
-            else {
-                if (target > A[mid] && target <= A[high]) {
-                    low = mid + 1;
-                } else {
-                    high = mid - 1;
-                }
-            }
+      int low = 0, high = A.length - 1;
+      while (low <= high) {
+        int mid = (low + high) / 2;
+        if (A[mid] == target) return mid;
+              
+        // the pivot is in the second half of A
+        if (A[low] <= A[mid]) {
+          if (target < A[mid] && target >= A[low]) {  // pay attention to the ">="!!
+            high = mid - 1;
+          } else {
+            low = mid + 1;
+          }
         }
-        
-        return -1;
-    }
+        // the pivot is in the first half of A
+        else {
+          if (target > A[mid] && target <= A[high]) { // pay attention to the "<="!!
+            low = mid + 1;
+          } else {
+            high = mid - 1;
+          }
+        }
+      }
+      
+      return -1;
+  }
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
